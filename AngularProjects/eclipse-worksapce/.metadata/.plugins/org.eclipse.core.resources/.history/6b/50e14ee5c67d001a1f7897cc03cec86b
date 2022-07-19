@@ -1,0 +1,15 @@
+package com.spring.boot.backend.apirest.curso.models.dao;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.spring.boot.backend.apirest.curso.models.entity.Docente;
+import com.spring.boot.backend.apirest.curso.models.entity.Curso;
+
+public interface IDocenteDao extends JpaRepository<Docente, Long>{
+	
+	@Query("from cursos")
+	public List<Curso> findAllCursos();
+}

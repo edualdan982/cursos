@@ -1,0 +1,10 @@
+INSERT INTO cursos (nombre) VALUES ('Java');
+INSERT INTO cursos (nombre) VALUES ('C++');
+INSERT INTO cursos (nombre) VALUES ('Bootstrap');
+INSERT INTO cursos (nombre) VALUES ('JavaScript');
+INSERT INTO cursos (nombre) VALUES ('Angular');
+INSERT INTO cursos (nombre) VALUES ('TypeScript');
+INSERT INTO cursos (nombre) VALUES ('HTML');
+INSERT INTO cursos (nombre) VALUES ('CSS');
+INSERT INTO cursos (nombre) VALUES ('SpirgBoot');
+INSERT INTO cursos (nombre) VALUES ('Assembler');

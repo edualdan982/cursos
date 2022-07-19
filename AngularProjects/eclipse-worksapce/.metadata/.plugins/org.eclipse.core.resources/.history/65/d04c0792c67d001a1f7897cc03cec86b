@@ -1,0 +1,56 @@
+package com.spring.boot.backend.apirest.curso.models.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.spring.boot.backend.apirest.curso.models.dao.IDocenteDao;
+import com.spring.boot.backend.apirest.curso.models.entity.Curso;
+import com.spring.boot.backend.apirest.curso.models.entity.Docente;
+
+@Service
+public class DocenteServiceImpl implements IDocenteServiceImpl {
+
+	@Autowired
+	private IDocenteDao docenteDao;
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Docente> findAll() {
+		return docenteDao.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Docente> findAll(Pageable pageable) {
+		return docenteDao.findAll(pageable);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Docente findById(Long id) {
+		return docenteDao.findById(id).orElse(null);
+	}
+
+	@Override
+	@Transactional
+	public Docente save(Docente Docente) {
+		return docenteDao.save(Docente);
+	}
+
+	@Override
+	@Transactional
+	public void delete(Long id) {
+		docenteDao.deleteById(id);
+	}
+
+	@Override
+	public List<Curso> findAllCursos(Long id) {
+		return docenteDao.findAllCursos(id);
+	}
+
+}

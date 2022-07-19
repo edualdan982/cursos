@@ -1,0 +1,14 @@
+package com.spring.boot.backend.apirest.curso.models.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Id;
+
+public class Cusro implements Serializable {
+	
+	@Id
+	@
+	private Long Id;
+	
+	
+}

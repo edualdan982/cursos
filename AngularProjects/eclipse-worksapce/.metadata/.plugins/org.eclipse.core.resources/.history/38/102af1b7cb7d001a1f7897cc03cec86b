@@ -1,0 +1,17 @@
+INSERT INTO cursos (nombre) VALUES ('Java');
+INSERT INTO cursos (nombre) VALUES ('C++');
+INSERT INTO cursos (nombre) VALUES ('Bootstrap');
+INSERT INTO cursos (nombre) VALUES ('JavaScript');
+INSERT INTO cursos (nombre) VALUES ('Angular');
+INSERT INTO cursos (nombre) VALUES ('TypeScript');
+INSERT INTO cursos (nombre) VALUES ('HTML');
+INSERT INTO cursos (nombre) VALUES ('CSS');
+INSERT INTO cursos (nombre) VALUES ('SpirgBoot');
+INSERT INTO cursos (nombre) VALUES ('Assembler');
+
+INSERT INTO docentes (nombres, apePaterno, apeMaterno, email) VALUES('Andrés Dual', 'Guzmán','Porta' ,'an.guzman@cursovirtual.com');
+INSERT INTO docentes (nombres, apePaterno, apeMaterno, email) VALUES('Jose Luis', 'Doe','Torvalds' ,'jo.doe@cursovirtual.com');
+INSERT INTO docentes (nombres, apePaterno, apeMaterno, email) VALUES('Pedro', 'Sarmiento','Gafias' ,'pe.sarmiento@cursovirtual.com');
+INSERT INTO docentes (nombres, apePaterno, apeMaterno, email) VALUES('Gabriel', 'Olaguiver','Comon' ,'ga.olaguiver@cursovirtual.com');
+INSERT INTO docentes (nombres, apePaterno, apeMaterno, email) VALUES('Miguel', 'Porta','Zeballos' ,'mi.porta@cursovirtual.com');
+INSERT INTO docentes (nombres, apePaterno, apeMaterno, email) VALUES('Calef', 'Villa','Gitler' ,'ca.villa@cursovirtual.com');

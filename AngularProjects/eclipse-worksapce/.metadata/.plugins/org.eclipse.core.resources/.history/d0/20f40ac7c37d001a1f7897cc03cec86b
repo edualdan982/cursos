@@ -1,0 +1,9 @@
+package com.spring.boot.backend.apirest.curso.models.dao;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.spring.boot.backend.apirest.curso.models.entity.Curso;
+
+public interface ICursoDao extends CrudRepository<Curso, Long>{
+
+}

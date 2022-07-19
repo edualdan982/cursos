@@ -1,0 +1,9 @@
+package com.spring.boot.backend.apirest.curso.models.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.spring.boot.backend.apirest.curso.models.entity.Usuario;
+
+public interface IUsuarioDao extends JpaRepository<Usuario, Long>{
+
+}
