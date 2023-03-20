@@ -1,30 +1,34 @@
 import { Component } from '@angular/core';
-
-interface Personaje{
-  nombre: string;
-  poder: number;
-}
+import { Personaje } from '../interfaces/dbz.interface';
+import { DbzService } from '../services/dbz.service';
 
 @Component({
   selector: 'app-main-page',
-  templateUrl: './main-page.component.html'
+  templateUrl: './main-page.component.html',
 })
 export class MainPageComponent {
-
   nuevo: Personaje = {
-    nombre: 'Trunks',
-    poder: 140000
-  }
-  agregar( ){
-    console.log('Esta es una prueba');
-  }
+    nombre: '',
+    poder: 0,
+  };
 
-  cambiarNombre(event: any){
+  cambiarNombre(event: any) {
     console.log(event.target.value);
   }
 
+  agregarNuevoPersonaje(personaje: Personaje) {
+    console.log('Main page component');
+    console.log(personaje);
+    // debugger;
+    this.personajes.push(personaje);
+  }
+  get personajes(): Personaje[] {
+    return this.dbzService.personajes;
+  }
   // agregar( event: any){
   //   event.preventDefault();
   //   console.log('Hey...!!!');
   // }
+
+  constructor(private dbzService: DbzService) {}
 }
