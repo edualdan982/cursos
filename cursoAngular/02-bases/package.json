@@ -7,10 +7,10 @@
     "build": "ng build",
     "build:href": "ng build --base-href ./",
     "build:github": "npm run delete:docs && npm run build && npm run copy:dist",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
     "delete:docs": "del-cli -f ../../docs",
-    "copy:dist": "copyfiles dist/bases/* ../../docs -f"
+    "copy:dist": "copyfiles dist/bases/* ../../docs -f",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
