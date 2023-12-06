@@ -1,23 +1,35 @@
-<p-panel [showHeader]="false">
-  <h1>Pipes Básicos</h1>
-  <p>
-    Pipe incluídos en Angular - Usualmente en el Common Module
-  </p>
-  <div class="p-grid">
-    <div class="p-col-4">
-      <p-card header="uppercase">
-        {{nameLower | lowercase}}
-      </p-card>
-    </div>
-    <div class="p-col-4">
-      <p-card header="lowercase">
-        {{nameUpper | titlecase}}
-      </p-card>
-    </div>
-    <div class="p-col-4">
-      <p-card header="titlecase">
-        3
-      </p-card>
-    </div>
-  </div>
+<p-panel header="Pipes Básicos" class="p-1">
+  <p>Pipe incluídos en Angular - Usualmente en el Common Module</p>
 </p-panel>
+<div class="grid">
+  <div class="col-12 md:col-4">
+    <p-card header="uppercase">
+      {{ nameLower | lowercase }}
+    </p-card>
+  </div>
+  <div class="col-12 md:col-4">
+    <p-card header="lowercase">
+      {{ nameUpper | titlecase }}
+    </p-card>
+  </div>
+  <div class="col-12 md:col-4">
+    <p-card header="titlecase"> 3 </p-card>
+  </div>
+
+  <div class="col-12 md:col-6">
+    <p-card header="titlecase">
+      <ul>
+        <li>fecha</li>
+        <li>fecha | date</li>
+      </ul>
+    </p-card>
+  </div>
+  <div class="col-12 md:col-6">
+    <p-card header="titlecase">
+      <ul>
+        <li>{{ customDate }}</li>
+        <li>{{ customDate | date }}</li>
+      </ul>
+    </p-card>
+  </div>
+</div>
