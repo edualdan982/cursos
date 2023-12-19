@@ -39,6 +39,7 @@ export class MenuComponent {
           {
             label: 'Otro elemento',
             icon: 'pi pi-align-left',
+            routerLink: 'custom',
           }
         ]
       }

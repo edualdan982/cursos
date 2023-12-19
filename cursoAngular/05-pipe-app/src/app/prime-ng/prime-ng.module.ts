@@ -5,8 +5,9 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
-import {FieldsetModule} from 'primeng/fieldset';
-import {PanelModule} from 'primeng/panel';
+import { FieldsetModule } from 'primeng/fieldset';
+import { PanelModule } from 'primeng/panel';
+import { CascadeSelectModule } from 'primeng/cascadeselect';
 
 @NgModule({
   exports: [
@@ -16,7 +17,8 @@ import {PanelModule} from 'primeng/panel';
     InputTextModule,
     MenubarModule,
     MenuModule,
-    PanelModule
+    PanelModule,
+    CascadeSelectModule,
   ],
 })
 export class PrimeNgModule {}
