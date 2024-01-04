@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'productos-order',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styles:[]
 })
 export class OrderComponent {
+  public items: MenuItem[] = [{item: 'Actulizar'}, {item: 'Eliminar'}];
+
 
 }
