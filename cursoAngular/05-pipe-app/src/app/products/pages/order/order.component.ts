@@ -7,7 +7,11 @@ import { MenuItem } from 'primeng/api';
   styles:[]
 })
 export class OrderComponent {
-  public items: MenuItem[] = [{item: 'Actulizar'}, {item: 'Eliminar'}];
+  public items: MenuItem[] = [
+    {label: 'Agregar', icon: 'pi pi-plus'},
+    {label: 'Imprimir', icon: 'pi pi-print'},
+    {label: 'Eliminar', icon: 'pi pi-trash'},
+  ];
 
 
 }

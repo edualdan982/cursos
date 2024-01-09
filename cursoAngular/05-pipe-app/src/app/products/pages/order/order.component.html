@@ -6,17 +6,11 @@
 
 <p-toolbar>
   <div class="p-toolbar-group-start">
-    <button pButton icon="pi pi-plus" class="mr-2"></button>
-    <button pButton icon="pi pi-print" class="mr-2"></button>
-    <button pButton icon="pi pi-upload"></button>
-  </div>
-  <div class="p-toolbar-group-center">
-    <span class="p-input-icon-left">
-      <i class="pi pi-search"></i>
-      <input pInputText placeholder="Search" />
-    </span>
+    <p-button label="ToggleCase" icon="pi pi-search"></p-button>
   </div>
   <div class="p-toolbar-group-end">
-    <p-splitButton label="Save" icon="pi pi-check" [model]="items"></p-splitButton>
+    <p-button class="mr-2" label="Por nombre" icon="pi pi-sort" styleClass="p-button-success"></p-button>
+    <p-button class="mr-2" label="Por volar" icon="pi pi-sort" styleClass="p-button-danger"></p-button>
+    <p-button class="mr-2" label="Por color" icon="pi pi-sort" styleClass="p-button-help"></p-button>
   </div>
 </p-toolbar>
