@@ -21,9 +21,9 @@
       <p-table [value]="heroes | sortBy:orderBy" [tableStyle]="{ 'min-width': '50rem' }">
         <ng-template pTemplate="header">
           <tr>
-            <th>Nombre</th>
-            <th>Vuela</th>
-            <th>Color</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Vuela</th>
+            <th scope="col">Color</th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-hero>
