@@ -1,11 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { HeroesService } from '../../services/heroes.service';
+import { Hero } from '../../interfaces/hero.interface';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
-  styles: [
-  ]
+  styles: [],
 })
-export class SearchPageComponent {
+export class SearchPageComponent implements OnInit {
+  public searchInput: FormControl = new FormControl('');
+  public heroes: Hero[] = [];
+  public selectedHero?: Hero;
 
+  constructor(private heroesService: HeroesService) {}
+  ngOnInit(): void {}
+
+  searchHero() {
+    const value: string = this.searchInput.value ?? '';
+    this.heroesService
+      .getSuggestions(value, 6)
+      .subscribe((data) => (this.heroes = data));
+  }
+
+  onSelectedOption(event: MatAutocompleteSelectedEvent) {
+    if (!event.option.value) {
+      this.selectedHero = undefined;
+      return;
+    }
+    const hero: Hero = event.option.value;
+    this.searchInput.setValue(hero.superhero);
+    this.selectedHero = hero;
+  }
 }

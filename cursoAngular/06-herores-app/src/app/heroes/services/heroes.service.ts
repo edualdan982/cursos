@@ -25,6 +25,14 @@ export class HeroesService {
   }
 
   eliminarHero(id: string): Observable<Hero> {
-    return this.http.delete<Hero>(`${this.baseUrl}/${this.baseUrl}`);
+    return this.http.delete<Hero>(`${this.baseUrl}`);
+  }
+
+  getSuggestions(query: string, limit?: number): Observable<Hero[]>{
+    if(!limit)
+      return this.http.get<Hero[]>(`${this.baseUrl}?q=${query}`);
+    else
+      return this.http.get<Hero[]>(`${this.baseUrl}?q=${query}&_limit=${limit}`);
+
   }
 }
