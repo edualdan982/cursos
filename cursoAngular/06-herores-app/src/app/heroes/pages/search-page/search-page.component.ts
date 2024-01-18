@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+
+import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { HeroesService } from '../../services/heroes.service';
 import { Hero } from '../../interfaces/hero.interface';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { HeroesService } from '../../services/heroes.service';
 
 @Component({
   selector: 'app-search-page',
   templateUrl: './search-page.component.html',
   styles: [],
 })
-export class SearchPageComponent implements OnInit {
+export class SearchPageComponent{
   public searchInput: FormControl = new FormControl('');
   public heroes: Hero[] = [];
   public selectedHero?: Hero;

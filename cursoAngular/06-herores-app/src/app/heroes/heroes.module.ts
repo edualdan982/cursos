@@ -28,6 +28,7 @@ import { HeroImagePipe } from './pipes/hero-image.pipe';
     HeroesRoutingModule,
     ReactiveFormsModule,
     MaterialModule,
+    ReactiveFormsModule
   ],
 })
 export class HeroesModule {}
