@@ -20,7 +20,8 @@
       <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <button mat-button color="warn">Logout</button>
+    <span>{{user?.email}}</span>
+    <button mat-button color="warn" (click)="onLogout()">Logout</button>
   </mat-toolbar>
   <div class="container">
     <router-outlet></router-outlet>
