@@ -14,6 +14,7 @@ const routes: Routes = [
       { path: 'new-account', component: RegisterPageComponent },
       { path: '**', redirectTo: 'login' },
     ],
+
   },
 ];
 @NgModule({
