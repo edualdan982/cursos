@@ -12,10 +12,8 @@
         <div class="col-sm-9">
 
           <input type="text" class="form-control" formControlName="name" placeholder="Nombre del producto">
-
-          <span class="form-text text-danger" *ngIf="myForm.get('name')?.hasError">
-            <!-- Debe de ser de 3 letras -->
-            error message
+          <span *ngIf="isValidField('name')" class="form-text text-danger">
+            {{getFieldError('name')}}
           </span>
         </div>
       </div>
@@ -25,8 +23,8 @@
         <label class="col-sm-3 col-form-label">Precio</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" formControlName="price" placeholder="Precio del producto">
-          <span class="form-text text-danger" *ngIf="myForm.get('price')?.hasError">
-            El precio debe de ser 0 o mayor
+          <span *ngIf="isValidField('price')" class="form-text text-danger">
+            {{getFieldError('price')}}
           </span>
         </div>
       </div>
@@ -36,9 +34,8 @@
         <label class="col-sm-3 col-form-label">Existencias</label>
         <div class="col-sm-9">
           <input type="number" class="form-control" formControlName="inStorage" placeholder="Existencias del producto">
-
-          <span class="form-text text-danger">
-            Las existencias deben de ser 0 o mayor
+          <span *ngIf="isValidField('inStorage')" class="form-text text-danger">
+            {{getFieldError('inStorage')}}
           </span>
         </div>
       </div>
@@ -58,9 +55,6 @@
 
   </div>
 </div>
-
-
-
 
 <div class="row">
   <div class="col">
