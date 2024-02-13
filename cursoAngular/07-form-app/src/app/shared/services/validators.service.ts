@@ -59,7 +59,11 @@ export class ValidatorsService {
         formGroup.get(field2)?.setErrors({ notEqual: true });
         return { notEqual: true };
       }
-      formGroup.get(field2)?.setErrors(null);
+      // Guardamos en un const los errors del formControl
+      const field2Errors = formGroup.get(field2)?.errors;
+      // Eliminamos el error 'notEqual'
+      delete field2Errors?.['notEqual'];
+      formGroup.get(field2)?.setErrors(field2Errors ?? null);
       return null;
     };
   }
