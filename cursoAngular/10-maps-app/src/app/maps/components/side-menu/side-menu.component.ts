@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { routes } from '../../../../../../08-selectores/src/app/countries/countries-routing.module';
 
 interface MenuItem {
   name: string;
