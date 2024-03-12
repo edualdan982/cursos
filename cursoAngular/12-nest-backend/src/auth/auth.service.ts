@@ -4,7 +4,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from './entities/auth.entity';
 import { Model } from 'mongoose';
-import { Type } from '../../../03-gifs-app/src/app/gifs/interfaces/gifs.interface';
 
 @Injectable()
 export class AuthService {
@@ -18,10 +17,8 @@ export class AuthService {
     try {
       const newUser = new this.userModel(createUserDto);
       return await newUser.save();
-    } catch (error: any) {
-      console.log("Validanddo");
-      console.log(error.code === '11000');
-      if(error.code && Number(error.code) === 11000){
+    } catch (error) {
+      if(Number(error['code']) === 11000){
         throw new BadRequestException(`${createUserDto.email} ya existe`)
       }
       throw new InternalServerErrorException(`Error en el proceso de save.`)
