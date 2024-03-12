@@ -1,11 +1,21 @@
 version: '3'
 services:
   db:
-    container_name: mean_db
+    container_name: mean-db
     image: mongo:5.0.16
+    #! Ojo para linux usar solo poner el volumes:
     volumes:
       - ./mongo:/data/db
+    # volumes:
+    #   - mongodata:/data/db
     ports:
-      - 27017:27017
+      - "27017:27017"
     # restart: always
-    
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: admin
+    #   MONGO_INITDB_ROOT_PASSWORD: 123456
+#! Eliminar esta linea si se usa la asignacion de volumen directa.
+# Si esta usandfo un wsl en windows posiblemente, pueda usar la version de linux.
+# volumes:
+#   mongodata:
+#     driver: local
