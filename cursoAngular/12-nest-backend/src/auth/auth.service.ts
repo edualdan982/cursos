@@ -95,12 +95,14 @@ export class AuthService {
       );
     }
     try {
-      const payload = await this.jwtService.verifyAsync(token);
-      
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SEED,
+      });
+      console.log(payload);
+      return payload;
     } catch (error) {
-      
+      throw new UnauthorizedException(error['message'] ?? 'JWT no autorizado');
     }
-    return;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {
