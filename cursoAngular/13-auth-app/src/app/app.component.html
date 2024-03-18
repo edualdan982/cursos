@@ -1,1 +1,6 @@
-<router-outlet/>
+<h1 *ngIf="!finishedAuthCheck() else yesAuthCheckToken">
+  Loading...
+</h1>
+<ng-template #yesAuthCheckToken>
+  <router-outlet />
+</ng-template>
