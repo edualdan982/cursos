@@ -13,6 +13,7 @@ import { JwtPayload } from './interfaces/jwt-payload';
 import { LoginResponse } from './interfaces/login-response';
 
 import { LoginDto, CreateUserDto, RegisterUserDto, UpdateAuthDto } from './dto';
+import { log } from 'console';
 
 @Injectable()
 export class AuthService {
@@ -95,12 +96,13 @@ export class AuthService {
       );
     }
     try {
-      const payload = await this.jwtService.verifyAsync(token);
-      
+      const payload = await this.jwtService.verifyAsync<JwtPayload>(token, {
+        secret: process.env.JWT_SEED,
+      });
+      return payload;
     } catch (error) {
-      
+      throw new UnauthorizedException(error['message'] ?? 'JWT no autorizado');
     }
-    return;
   }
 
   private extractTokenFromHeader(request: Request): string | undefined {

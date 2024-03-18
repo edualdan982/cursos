@@ -1,20 +1,17 @@
 import {
+  Body,
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
   Request,
+  UseGuards
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { LoginDto } from './dto/login-dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { AuthGuard } from './guards/auth.guard';
+import { LoginResponse } from './interfaces/login-response';
 
 @Controller('auth')
 export class AuthController {
@@ -56,8 +53,13 @@ export class AuthController {
   //   return this.authService.remove(+id);
   // }
 
-  @Post('check-token')
-  checkToken(@Request() req: Request) {
-    return this.authService.checkToken(req);
+  @UseGuards(AuthGuard)
+  @Get('check-token')
+  checkToken(@Request() req: Request): LoginResponse {
+    const user = req['user'];
+    return {
+      user, 
+      token: this.authService.getJwtToken({id: user['_id']})
+    }
   }
 }
