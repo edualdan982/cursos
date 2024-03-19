@@ -2,6 +2,9 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ValidatorsService } from '../../services/validators.service';
+import { RegisterRequest } from '../../interfaces/register-request.interface';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   templateUrl: './register-page.component.html',
@@ -11,6 +14,7 @@ export class RegisterPageComponent {
   private authService = inject(AuthService);
   private validatorsService = inject(ValidatorsService);
   private fb = inject(FormBuilder);
+  private router = inject(Router);
 
   public myForm = this.fb.group(
     {
@@ -32,6 +36,12 @@ export class RegisterPageComponent {
 
   register() {
     console.log(this.myForm.value);
-
+    const registerUser = this.myForm.value as RegisterRequest;
+    this.authService.register(registerUser).subscribe({
+      next: () => this.router.navigateByUrl('/dashboard'),
+      error: (message) => {
+        Swal.fire('Error: ', message, 'error');
+      },
+    });
   }
 }
