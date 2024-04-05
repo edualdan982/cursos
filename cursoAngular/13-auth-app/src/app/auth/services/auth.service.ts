@@ -8,6 +8,7 @@ import {
   LoginResponse,
   User,
 } from '../interfaces';
+import { RegisterRequest } from '../interfaces/register-request.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -77,5 +78,13 @@ export class AuthService {
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.notAuthenticated);
     localStorage.removeItem('token');
+  }
+
+  public register(request: RegisterRequest):Observable<boolean>{
+    const url = `${this.baseUrl}/auth/register`;
+    return this.http.post<LoginResponse>(url, request).pipe(
+      map(({ token, user }) => this.setAuthentication(user, token)),
+      catchError((err) => throwError(() => err.error.message))
+    );
   }
 }
