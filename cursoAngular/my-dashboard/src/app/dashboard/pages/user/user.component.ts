@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@interfaces/request-response';
 import { TitleComponent } from '@shared/title/title.component';
@@ -11,12 +11,12 @@ import { UsersService } from '@services/users.service';
   standalone: true,
   imports: [CommonModule, TitleComponent],
   template: `
-    <app-title title="User" />
+    <app-title [title]="titleLabel()" />
     @if (user()) {
     <section>
       <img [srcset]="user()!.avatar" [alt]="user()!.first_name" />
       <div>
-        <h3>{{ user()!.first_name }}</h3>
+        <h3>{{ user()!.first_name}} {{user()!.last_name}}</h3>
         <p>{{ user()?.email }}</p>
       </div>
     </section>
@@ -28,6 +28,14 @@ import { UsersService } from '@services/users.service';
 export default class UserComponent {
   private router = inject(ActivatedRoute);
   private userService = inject(UsersService);
+  // titleLabel = Informacion del usuario:  Tracey Ramos
+  public titleLabel = computed(() => {
+    if (!this.user())
+      return `Informacion del usuario: ${this.user()!.first_name} ${
+        this.user()!.last_name
+      }`;
+    else return 'Informacion del usuario';
+  });
 
   // public user = signal<User| undefined>(undefined);
   public user = toSignal<User>(
