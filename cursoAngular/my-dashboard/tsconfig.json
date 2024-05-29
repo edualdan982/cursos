@@ -4,7 +4,8 @@
   "compilerOptions": {
     "paths":{
       "@shared/*": ["./src/app/shared/*"],
-      "@services/*": ["./src/app/services/*"]
+      "@services/*": ["./src/app/services/*"],
+      "@interfaces/*": ["./src/app/interfaces/*"]
     },
     "outDir": "./dist/out-tsc",
     "strict": true,
