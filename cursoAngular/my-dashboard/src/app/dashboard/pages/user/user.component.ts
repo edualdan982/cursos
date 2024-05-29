@@ -16,7 +16,7 @@ import { UsersService } from '@services/users.service';
     <section>
       <img [srcset]="user()!.avatar" [alt]="user()!.first_name" />
       <div>
-        <h3>{{ user()!.first_name}} {{user()!.last_name}}</h3>
+        <h3>{{ user()!.first_name }} {{ user()!.last_name }}</h3>
         <p>{{ user()?.email }}</p>
       </div>
     </section>
