@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Feature, PlaceResponse } from '../interfaces/places';
 import { PlacesApiClient } from '../api';
+import { Feature, PlaceResponse } from '../interfaces/places';
 
 @Injectable({
   providedIn: 'root',
