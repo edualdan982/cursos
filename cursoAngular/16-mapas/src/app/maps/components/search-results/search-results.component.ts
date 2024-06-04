@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PlacesService } from '../../services';
+import { MapService, PlacesService } from '../../services';
 import { retry } from 'rxjs';
 import { Feature } from '../../interfaces/places';
 
@@ -9,12 +9,12 @@ import { Feature } from '../../interfaces/places';
   styleUrls: ['./search-results.component.css'],
 })
 export class SearchResultsComponent {
-  constructor(private placesService: PlacesService) {}
+  public selectedId: string = '';
 
-  public flyTo(coodinates: number[]) {
-    const [lng, lat] = coodinates;
-    console.log({ lng, lat });
-  }
+  constructor(
+    private placesService: PlacesService,
+    private mapService: MapService
+  ) {}
 
   get isLoadingPlaces() {
     return this.placesService.isLoadingPlaces;
@@ -22,5 +22,12 @@ export class SearchResultsComponent {
 
   get places(): Feature[] {
     return this.placesService.places;
+  }
+
+  public flyTo(feature: Feature) {
+    this.selectedId = feature.id;
+    const [lng, lat] = feature.geometry.coordinates;
+    console.log({ lng, lat });
+    this.mapService.flyTo([lng, lat]);
   }
 }
