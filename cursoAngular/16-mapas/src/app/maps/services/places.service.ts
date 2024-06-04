@@ -30,20 +30,17 @@ export class PlacesService {
           resolve(this.userLocation);
         },
         (err) => {
-          alert('No se pudo obtener la geolocalización');
+          let msg: string ='No se pudo obtener la geolocalización';
+          alert(msg);
           console.error(err);
-          reject();
+          reject(new Error(msg));
         }
       );
     });
   }
   getPlacesByQuery(query: string = '') {
     // !TODO: evaluar con el query es vacio o nulo
-    if (query.length === 0) {
-      this.isLoadingPlaces = false;
-      this.places = [];
-      return;
-    }
+
     if (!this.userLocation) throw Error('No hay userLocation');
     this.isLoadingPlaces = false;
     this.placesApiClient
@@ -54,6 +51,8 @@ export class PlacesService {
         },
       })
       .subscribe((resp) => {
+        console.log(resp);
+
         this.isLoadingPlaces = false;
         this.places = resp.features;
 
