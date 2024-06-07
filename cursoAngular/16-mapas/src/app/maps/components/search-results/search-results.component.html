@@ -2,26 +2,19 @@
   <h6>Cargando...</h6>
   <span>Espere por favor...</span>
 </div>
-<ul class="list-group mt-2" *ngIf="places.length > 0">
-  <li
-    class="list-group-item list-group-item-action pointer"
-    (click)="flyTo(place)"
-    [class.active]="place.id === selectedId"
+<ul class="list-group mt-2" *ngIf="places.length > 0" >
+  <li class="list-group-item list-group-item-action pointer" [class.active]="place.id === selectedId"
     *ngFor="let place of places"
-  >
+    (click)="flyTo(place)"
+    >
     <h6>{{ place.properties.name }}</h6>
     <p>
       {{ place.properties.full_address }}
     </p>
 
-    <button
-      [title]="place.properties.place_formatted"
-      class="btn btn-sm"
-      [ngClass]="
-        place.id === selectedId ? 'btn-outline-light' : 'btn-outline-primary'
-      "
-      (click)="flyTo(place)"
-    >
+    <button [title]="place.properties.place_formatted" class="btn btn-sm"
+      (click)="getDirections( place)"
+      [ngClass]="place.id === selectedId ? 'btn-outline-light' : 'btn-outline-primary'">
       Direcciones
     </button>
   </li>

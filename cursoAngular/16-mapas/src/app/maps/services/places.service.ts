@@ -39,7 +39,7 @@ export class PlacesService {
     });
   }
   getPlacesByQuery(query: string = '') {
-    // !TODO: evaluar con el query es vacio o nulo
+    //? Evaluar con el query es vacio o nulo
 
     if (!this.userLocation) throw Error('No hay userLocation');
     this.isLoadingPlaces = false;
@@ -56,7 +56,11 @@ export class PlacesService {
         this.isLoadingPlaces = false;
         this.places = resp.features;
 
-        this.mapService.createMarkersFromPlaces(resp.features);
+        this.mapService.createMarkersFromPlaces(resp.features, this.userLocation!);
       });
+  }
+
+  deletePlaces(){
+    this.places = [];
   }
 }

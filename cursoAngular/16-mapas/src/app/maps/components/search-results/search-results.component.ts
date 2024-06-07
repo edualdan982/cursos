@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { MapService, PlacesService } from '../../services';
-import { retry } from 'rxjs';
 import { Feature } from '../../interfaces/places';
 
 @Component({
@@ -29,5 +28,21 @@ export class SearchResultsComponent {
     const [lng, lat] = feature.geometry.coordinates;
     console.log({ lng, lat });
     this.mapService.flyTo([lng, lat]);
+    this.mapService.getRouteBetweenPoints(
+      this.placesService.userLocation!,
+      [lng, lat]
+    );
+  }
+
+  getDirections(place: Feature){
+    if(!this.placesService.userLocation) throw Error('No hay userLocation');
+
+    this.placesService.deletePlaces();
+
+    const start = this.placesService.userLocation as [number, number];
+    const end = place.geometry.coordinates as [number, number];
+    this.mapService.getRouteBetweenPoints(start, end);
+
+
   }
 }
