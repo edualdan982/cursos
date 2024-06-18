@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-SecuringWebApplication<securing-web-initial>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.example.securingweb.SecuringWebApplication",
+      "projectName": "securing-web-initial",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-AuthJwtApplication<auth-jwt>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "edual.authjwt.AuthJwtApplication",
+      "projectName": "auth-jwt",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

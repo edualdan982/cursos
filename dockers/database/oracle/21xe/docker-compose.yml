@@ -1,0 +1,9 @@
+services:
+  db:
+    image: gvenzl/oracle-xe:21-full
+    container_name: oradb-21xe
+    # restart: always
+    environment:
+      ORACLE_PASSWORD: 123456
+    ports:
+      - 1521:1521
