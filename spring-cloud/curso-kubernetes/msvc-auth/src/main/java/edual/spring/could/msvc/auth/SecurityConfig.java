@@ -89,18 +89,6 @@ public class SecurityConfig {
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
   }
- // @formatter:off
-  // @Bean
-  // public UserDetailsService userDetailsService() {
-  //   // Vamos a modificar para que este consuma desde el msvc-usuarios
-  //   UserDetails userDetails = User.withDefaultPasswordEncoder()
-  //       .username("user")
-  //       .password("password")
-  //       .roles("USER")
-  //       .build();
-  //   return new InMemoryUserDetailsManager(userDetails);
-  // }
- // @formatter:on
 
   @Bean
   public RegisteredClientRepository registeredClientRepository() {
