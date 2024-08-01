@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  oracle:
+    container_name: oracle21c
+    image: oracle/database:21.3.0-ee
+    volumes:
+      - ./backup:/home/oracle/backup
+      - ./oradata:/opt/oracle/oradata
+    ports:
+      - 1521:1521
+      - 5500:5500
+    environment:
+      - ORACLE_PDB=PDBACUARIO
+      - ORACLE_PWD=orausu10
+      - INIT_SGA_SIZE=3000
+      - INIT_PGA_SIZE=1000
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - TZ=America/La_Paz

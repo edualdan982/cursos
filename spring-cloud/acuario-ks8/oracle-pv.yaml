@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: oracle-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /opt/oracle/data
+    type: DirectoryOrCreate
