@@ -4,10 +4,12 @@ metadata:
   name: oracle21c
 spec:
   ports:
-  - port: 1521
+  - name: sqlnet
+    port: 1521
     protocol: TCP
     targetPort: 1521
-  - port: 5500
+  - name: downsql
+    port: 5500
     protocol: TCP
     targetPort: 5500
   selector:

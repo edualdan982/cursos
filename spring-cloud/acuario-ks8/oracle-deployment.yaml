@@ -15,9 +15,9 @@ spec:
       containers:
         - image: edualdan982/oracle-db:21.3.0-ee
           name: oracle21c
-          volumeMounts:
-            - name: data-oracle
-              mountPath: /opt/oracle/oradata
+          # volumeMounts:
+          #   - name: data-oracle
+          #     mountPath: /opt/oracle/oradata
           ports:
             - containerPort: 1521
             - containerPort: 5550
@@ -45,12 +45,12 @@ spec:
             - name: ORACLE_CHARACTERSET
               valueFrom:
                 configMapKeyRef:
-                  name: databse
+                  name: database
                   key: oracle_characterset
             - name: TZ
               valueFrom:
                 configMapKeyRef:
-                  name: databse
+                  name: database
                   key: tz
           resources: {}
             # limits:
@@ -59,7 +59,7 @@ spec:
             # requests:
             #   memory: "128Mi"
             #   cpu: "250m"
-      volumes:
-        - name: data-oracle
-          persistentVolumeClaim:
-            claimName: oracle-pvc
+      # volumes:
+      #   - name: data-oracle
+      #     persistentVolumeClaim:
+      #       claimName: oracle-pvc

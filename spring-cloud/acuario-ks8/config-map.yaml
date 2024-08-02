@@ -16,7 +16,6 @@ kind: ConfigMap
 metadata:
   name: database
 data:
-  port: "1521"
   db_host: oracle21c
   oracle_pdb: pdbtest
   oracle_characterset: AL32UTF8

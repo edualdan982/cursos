@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /opt/oracle/data
+    path: /opt/oracle21c/oradata
     type: DirectoryOrCreate
