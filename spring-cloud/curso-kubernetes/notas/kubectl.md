@@ -147,3 +147,11 @@ kubectl delete pods,services,deployments --all --all-namespaces
 ```
 Advertencia: Este comando eliminará todos tus recursos de Kubernetes, así que úsalo con precaución. Asegúrate de entender completamente lo que este comando hace antes de ejecutarlo.
 
+
+#### Agregar un secret docker
+```bash
+kubectl create secret docker-registry <my-docker-secret> \
+  --docker-username=<user_docker> \
+  --docker-password=<secret_pass> \
+  --docker-email=wipitor982@gmail.com
+```

@@ -1,5 +1,7 @@
 package edual.interceptors.app.interceptors;
 
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +35,20 @@ public class LoadingTimeInterceptor implements HandlerInterceptor {
     HandlerMethod method = (HandlerMethod) handler;
     log.info("LoadingTimeInterceptor: preHandle() method: {}, {}", method.getMethod().getName());
 
-    log.info("Response: {}", objectMapper.writeValueAsString(response));
-    log.info("Request: {}", objectMapper.writeValueAsString(request));
+    // log.info("Response: {}", objectMapper.writeValueAsString(response));
+    log.info("Request: {}", objectMapper.writeValueAsString(request.getRequestURI()));
+
+    if (!(request instanceof ContentCachingRequestWrapper))
+      request = new ContentCachingRequestWrapper(request);
+
+    // Leer el cuerpo de la solicitud
+    ContentCachingRequestWrapper cachingRequestWrapper = (ContentCachingRequestWrapper) request;
+    byte[] body = cachingRequestWrapper.getCachedBody();
+    String requestBody = new String(body, StandardCharsets.UTF_8);
+
+    // Imprimir el cuerpo de la solicitud
+    log.info("Request Body: " + requestBody);
+
     return HandlerInterceptor.super.preHandle(request, response, handler);
   }
 

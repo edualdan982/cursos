@@ -3,10 +3,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   effect,
-  EventEmitter,
   input,
-  output,
-  Output,
+  output
 } from '@angular/core';
 import { Product } from '@interfaces/product.interface';
 

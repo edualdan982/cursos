@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracle21c
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle21c
+  template:
+    metadata:
+      labels:
+        app: oracle21c
+    spec:
+      containers:
+        - image: edualdan982/oracle-db:21.3.0-ee
+          name: oracle21c
+          # volumeMounts:
+          #   - name: data-oracle
+          #     mountPath: /opt/oracle/oradata
+          ports:
+            - containerPort: 1521
+            - containerPort: 5550
+          env:
+            - name: ORACLE_PDB
+              value: "PDBTEST"
+            - name: ORACLE_PWD
+              value: "Pelota12%"
+            - name: INIT_SGA_SIZE
+              value: "3000"
+            - name: INIT_PGA_SIZE
+              value: "1000"
+            - name: ORACLE_CHARACTERSET
+              value: "AL32UTF8"
+            - name: TZ
+              value: "America/La_Paz"
+          resources: {}
+            # limits:
+            #   memory: "512Mi"
+            #   cpu: "500m"
+            # requests:
+            #   memory: "128Mi"
+            #   cpu: "250m"
+      # volumes:
+      #   - name: data-oracle
+      #     persistentVolumeClaim:
+      #       claimName: oracle-pvc

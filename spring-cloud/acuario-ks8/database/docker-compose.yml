@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   oracle:
-    container_name: oracle21c
+    container_name: oracle-local-21c
     image: oracle/database:21.3.0-ee
     volumes:
       - ./backup:/home/oracle/backup

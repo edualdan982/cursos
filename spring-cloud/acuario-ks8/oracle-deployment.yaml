@@ -23,42 +23,49 @@ spec:
             - containerPort: 5550
           env:
             - name: ORACLE_PDB
-              valueFrom:
-                configMapKeyRef:
-                  name: database
-                  key: oracle_pdb
+              value: 'PDBTEST'
+              # valueFrom:
+              #   configMapKeyRef:
+              #     name: database
+              #     key: oracle_pdb
             - name: ORACLE_PWD
-              valueFrom:
-                secretKeyRef:
-                  name: database
-                  key: password
+              value: 'Pelota12%'
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: database
+              #     key: password
             - name: INIT_SGA_SIZE
-              valueFrom:
-                configMapKeyRef:
-                  name: database
-                  key: init_sga_size
+              value: '3000'
+              # valueFrom:
+              #   configMapKeyRef:
+              #     name: database
+              #     key: init_sga_size
             - name: INIT_PGA_SIZE
-              valueFrom:
-                configMapKeyRef:
-                  name: database
-                  key: init_pga_size
+              value: '1000'
+              # valueFrom:
+              #   configMapKeyRef:
+              #     name: database
+              #     key: init_pga_size
             - name: ORACLE_CHARACTERSET
-              valueFrom:
-                configMapKeyRef:
-                  name: database
-                  key: oracle_characterset
+              value: 'AL32UTF8'
+              # valueFrom:
+              #   configMapKeyRef:
+              #     name: database
+              #     key: oracle_characterset
             - name: TZ
-              valueFrom:
-                configMapKeyRef:
-                  name: database
-                  key: tz
-          resources: {}
-            # limits:
-            #   memory: "512Mi"
-            #   cpu: "500m"
-            # requests:
-            #   memory: "128Mi"
-            #   cpu: "250m"
+              value: 'America/La_Paz'
+              # valueFrom:
+              #   configMapKeyRef:
+              #     name: database
+              #     key: tz
+          resources:
+            limits:
+              cpu: ''
+              memory: '512Mi'
+            cpu: '500m'
+            requests:
+              cpu: '250m'
+              memory: '2Gib'
       # volumes:
       #   - name: data-oracle
       #     persistentVolumeClaim:

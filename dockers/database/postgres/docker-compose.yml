@@ -10,20 +10,20 @@ services:
     #Implementar volumenes de /var/liv/postgresql/data
     volumes:
       - dbdata:/var/lib/postgresql/data
-    networks:
-      - spring
-  # admin:
-  #   image: dpage/pgadmin4
-  #   container_name: admin-postgres-db
-  #   restart: always
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - 8032:80
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: edualsarmiento@gmail.com
-  #     PGADMIN_DEFAULT_PASSWORD: pelota12
+    # networks:
+    #   - spring
+  admin:
+    image: dpage/pgadmin4
+    container_name: admin-postgres-db
+    restart: always
+    depends_on:
+      - db
+    ports:
+      - 8032:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: edualsarmiento@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pelota12
 volumes:
   dbdata:
-networks:
-  spring:
+# networks:
+#   spring:
