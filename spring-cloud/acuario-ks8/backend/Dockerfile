@@ -18,7 +18,6 @@ WORKDIR /app/$MSVC_NAME
 COPY ./$MSVC_NAME/.mvn ./.mvn
 COPY ./$MSVC_NAME/mvnw .
 COPY ./$MSVC_NAME/pom.xml .
-
 COPY ./$MSVC_NAME/src ./src
 #ESTE COMANDO SOLO HA SIDO NECESARIO PARA CONVERTIR EL FORMATO DEL FICHERO MVNW DE WINDOWS A LINUX, SINO FALLABA
 RUN sed -i -e 's/\r$//' ./mvnw \
@@ -32,21 +31,22 @@ FROM openjdk:17-jdk-alpine
 #Debemos declarar solo el nombre de la variable para darle uso en este stage
 ARG MSVC_NAME
 ARG MSVC_VERSION
+ARG PORT_APP=9000
+
+ENV APP_NAME=$MSVC_NAME-$MSVC_VERSION.jar
 
 WORKDIR /app
 RUN mkdir ./logs
 
 ARG TARGET_FOLDER=/app/$MSVC_NAME/target
 
-COPY --from=builder $TARGET_FOLDER/$MSVC_NAME$-$MSVC_VERSION .
+COPY --from=builder $TARGET_FOLDER/$APP_NAME .
 
-ENV NAME=$MSVC_NAME
-ENV VERSION=$MSVC_VERSION
-
-ARG PORT_APP=9000
 ENV PORT $PORT_APP
 EXPOSE $PORT
 
+RUN jar -xf "./$APP_NAME"
 
 # ENTRYPOINT [ "java", "-jar", "msvc-auth-0.0.1-SNAPSHOT.jar"]
-CMD [ "java", "-jar", "$NAME-$VERSION.jar"]
+# CMD [ "java", "-jar", "$NAME-$VERSION.jar"]
+CMD ["java -Dserver.port=$PORT org.springframework.boot.loader.JarLauncher"]
