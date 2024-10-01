@@ -1,0 +1,91 @@
+# Declaración del Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bd
+  name: oracle-11xe-svc
+  namespace: financieros
+spec:
+  type: NodePort
+  ports:
+    - name: sqlnet
+      port: 1521
+      protocol: TCP
+      targetPort: 1521
+    - name: downsql
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: oracle-11xe
+---
+# Declaración del StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: bd
+  name: oracle-11xe
+  namespace: financieros
+spec:
+  serviceName: "oracle-11xe-svc"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle-11xe
+  template:
+    metadata:
+      labels:
+        app: oracle-11xe
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - image: edualdan982/oracle-db:11.2.0.2-xe
+          name: oracle-11xe
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "2"
+            limits:
+              memory: "4Gi"
+              cpu: "4"
+          volumeMounts:
+            - name: data-oracle-11xe
+              mountPath: /u01/app/oracle/oradata
+            - name: dshm-oracle-11xe
+              mountPath: /dev/shm
+          ports:
+            - containerPort: 1521 
+            
+              name: sqlnet
+            - containerPort: 8080
+              name: downsql
+          env:
+            - name: ORACLE_PWD
+              value: "Pelota12"
+            - name: ORACLE_CHARACTERSET
+              value: "AL32UTF8"
+            - name: TZ
+              value: "America/La_Paz"
+      volumes:
+        - name: data-oracle-11xe
+          hostPath:
+            path: /vol/financieros/oradata-11xe
+            type: Directory
+        - name: dshm-oracle-11xe
+          emptyDir:
+            medium: Memory
+      imagePullSecrets:
+        - name: edualdan982-secret
+      nodeName: n2
+  volumeClaimTemplates:
+    - metadata:
+        name: dshm-oracle-11xe
+      spec:
+        accessModes: [ "ReadWriteMany" ]
+        storageClassName: "nfs-client"
+        resources:
+          requests:
+            storage: "2Gi"

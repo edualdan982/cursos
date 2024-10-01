@@ -1,0 +1,16 @@
+version: '3'
+services:
+  oracle11xe:
+    image: oracle/database:11.2.0.2-xe
+    container_name: oracle11xe
+    ports:
+      - "1521:1521" # Puerto para Oracle Database
+      - "8080:8080" # Puerto para Oracle APEX/EM
+    environment:
+      - ORACLE_PWD=pelota12 # Contraseña para el usuario SYS/SYSTEM
+    shm_size: '1g' # Tamaño del shared memory
+    volumes:
+      - /opt/oracle-data-11xe:/opt/oracle/oradata # Para persistencia de datos
+
+# volumes:
+#   oracle_data:

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  oracle19se:
+    image: oracle/database:19.3.0-se2
+    container_name: oracle19se
+    ports:
+      - "1521:1521" # Puerto para Oracle Database
+      - "5500:5500" # Puerto para Oracle Enterprise Manager
+    environment:
+      - ORACLE_PDB=PDBACUARIO   # Nombre del pluggable database
+      - ORACLE_PWD=orausu10     # Contraseña para el usuario SYS/SYSTEM
+      - INIT_SGA_SIZE=3000      # Tamaño de SGA (Shared Global Area) en MB
+      - INIT_PGA_SIZE=1000      # Tamaño de PGA (Program Global Area) en MB
+    volumes:
+      - /opt/oracle-data-19se:/opt/oracle/oradata # Directorio para persistencia de datos
