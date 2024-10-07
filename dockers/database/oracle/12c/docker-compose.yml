@@ -1,0 +1,16 @@
+version: '3'
+services:
+  oracle-12ee:
+    image: oracle/database:12.2.0.1-ee
+    container_name: oracle-12ee
+    ports:
+      - "1521:1521" # Puerto para Oracle Database
+      - "5500:5500" # Puerto para Oracle Enterprise Manager Express(OEM express)
+    environment:
+      - ORACLE_PWD=pelota12 # Contraseña para el usuario SYS/SYSTEM
+      - ORACLE_SID=BI
+      - ORACLE_PDB=stage
+      - ORACLE_CHARACTERSET=AL32UTF8
+      - TZ=America/La_Paz
+    volumes:
+      - ./oradata:/opt/oracle/oradata # Para persistencia de datos
