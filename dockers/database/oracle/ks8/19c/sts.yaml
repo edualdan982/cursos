@@ -1,0 +1,117 @@
+# Declaración del Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bd
+  name: oracle-19ee-svc
+  namespace: financieros
+spec:
+  type: NodePort
+  ports:
+    - name: sqlnet
+      port: 1521
+      protocol: TCP
+      targetPort: 1521
+    - name: downsql
+      port: 5500
+      protocol: TCP
+      targetPort: 5500
+  selector:
+    app: oracle-19ee
+---
+# Declaracion del StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: bd
+  name: oracle-19ee
+  namespace: financieros
+spec:
+  serviceName: "oracle-19ee-svc"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle-19ee
+  template:
+    metadata:
+      labels:
+        app: oracle-19ee
+    spec:
+      securityContext:
+        runAsUser: 54321
+        fsGroup: 54321
+        runAsGroup: 54322
+        supplementalGroups: [54321, 54322, 54323, 54324, 54325, 54326, 54330]
+      imagePullSecrets:
+        - name: edualdan982-secret
+      nodeName: n2
+      containers:
+        - image: edualdan982/oracle-db:19.3.0-ee
+          name: oracle-19ee
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "4"
+            limits:
+              memory: "8Gi"
+              cpu: "6"
+          volumeMounts:
+            - name: oradata-19ee-pvc
+              mountPath: /opt/oracle/oradata
+          ports:
+            - containerPort: 1521
+              name: sqlnet
+            - containerPort: 5550
+              name: downsql
+          env:
+            - name: ORACLE_SID
+              value: ORCLCDB
+            - name: ORACLE_PDB
+              value: PDBAPP
+            - name: ORACLE_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-secret
+                  key: password
+            - name: INIT_SGA_SIZE
+              value: "3000"
+            - name: INIT_PGA_SIZE
+              value: "1000"
+            - name: ORACLE_CHARACTERSET
+              value: 'AL32UTF8'
+            - name: TZ
+              value: 'America/La_Paz'
+            - name: ORACLE_EDITION
+              value: 'enterprise'
+            - name: ORACLE_BASE
+              value: '/opt/oracle'
+            - name: ORACLE_HOME
+              value: '/opt/oracle/product/19c/dbhome_1'
+          readinessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            exec:
+              command:
+                - /bin/sh
+                - "-c"
+                - $ORACLE_BASE/$CHECK_DB_FILE
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            exec:
+              command:
+                - /bin/sh
+                - "-c"
+                - $ORACLE_BASE/$CHECK_DB_FILE
+  volumeClaimTemplates:
+    - metadata:
+        name: oradata-19ee-pvc
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: 'nfs-client'
+        resources:
+          requests:
+            storage: '10Gi'

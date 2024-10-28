@@ -1,0 +1,116 @@
+# Declaración del Service
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bd
+  name: oracle-12se-svc
+  namespace: financieros
+spec:
+  type: NodePort
+  ports:
+    - name: sqlnet
+      port: 1521
+      protocol: TCP
+      targetPort: 1521
+    - name: downsql
+      port: 5500
+      protocol: TCP
+      targetPort: 5500
+  selector:
+    app: oracle-12se
+---
+# Declaración del StatefulSet
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: bd
+  name: oracle-12se
+  namespace: financieros
+spec:
+  serviceName: 'oracle-12se-svc'
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracle-12se
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: oracle-12se
+    spec:
+      securityContext:
+        runAsUser: 54321
+        fsGroup: 54321
+        runAsGroup: 54322
+        supplementalGroups: [54321, 54322, 54323, 54324, 54325, 54326, 54330]
+      imagePullSecrets:
+        - name: edualdan982-secret
+      nodeName: n2
+      containers:
+        - image: edualdan982/oracle-db:12.2.0.1-se2
+          name: oracle-12se
+          #command: ['sh','-c', 'chown -R 54321:54322 /opt/oracle/oradata && chmod -R 755 /opt/oracle/oradata']
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              memory: '4Gi'
+              cpu: '4'
+            limits:
+              memory: '8Gi'
+              cpu: '6'
+          volumeMounts:
+            - name: oradata-12se-pvc
+              mountPath: /opt/oracle/oradata
+          ports:
+            - containerPort: 1521
+              name: sqlnet
+            - containerPort: 5500
+              name: downsql
+          env:
+            - name: ORACLE_SID
+              value: ORCLCDB
+            - name: ORACLE_PDB
+              value: GEMINIS
+            - name: ORACLE_PWD
+              valueFrom:
+                secretKeyRef:
+                  name: oracle-secret
+                  key: password
+            - name: ORACLE_CHARACTERSET
+              value: 'AL32UTF8'
+            - name: TZ
+              value: 'America/La_Paz'
+            - name: ORACLE_EDITION
+              value: 'standard'
+            - name: ORACLE_BASE
+              value: '/opt/oracle'
+            - name: ORACLE_HOME
+              value: '/opt/oracle/product/12.2.0.1/dbhome_1'
+          readinessProbe:
+            initialDelaySeconds: 60
+            periodSeconds: 60
+            exec:
+              command:
+                - /bin/sh
+                - "-c"
+                - $ORACLE_BASE/$CHECK_DB_FILE
+          livenessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 60
+            exec:
+              command:
+                - /bin/sh
+                - "-c"
+                - $ORACLE_BASE/$CHECK_DB_FILE
+  volumeClaimTemplates:
+    - metadata:
+        name: oradata-12se-pvc
+      spec:
+        accessModes: ['ReadWriteOnce']
+        storageClassName: 'nfs-client'
+        resources:
+          requests:
+            storage: '10Gi'

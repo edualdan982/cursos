@@ -6,11 +6,11 @@ services:
       - "1521:1521" # Puerto para Oracle Database
       - "5500:5500" # Puerto para Oracle Enterprise Manager Express(OEM express)
     environment:
-      - ORACLE_PWD=pelota12 # Contraseña para el usuario SYS/SYSTEM
-     # - ORACLE_SID=BI
-      - ORACLE_PDB=BIUMSA
-      - ORACLE_CHARACTERSET=AL32UTF8
-      - TZ=America/La_Paz
+      ORACLE_PWD: Pelota12* # Contraseña para el usuario SYS/SYSTEM
+      #ORACLE_SID=BI
+      ORACLE_PDB: BIUMSA
+      ORACLE_CHARACTERSET: AL32UTF8
+      TZ: America/La_Paz
     volumes:
       - ./oradata:/opt/oracle/oradata # Para persistencia de datos
   obiee-12:
@@ -26,7 +26,7 @@ services:
       DB_PORT: 1521
       DB_SERVICE: BIUMSA
       DB_USERNAME: sys
-      DB_PASSWORD: pelota12
+      DB_PASSWORD: Pelota12*
       SCHEMA_PREFIX: DEV
       SCHEMA_PASSWORD: devPassword12
       WEBLOGIC_CLASSPATH: "$ORACLE_HOME/wlserver/server/lib/weblogic.jar"
@@ -34,4 +34,4 @@ services:
       oracle-12ee:
         condition: service_healthy
         restart: true
-    entrypoint: ["/bin/bash", "-c", "echo pelota12 | /u01/wait_for_db.sh /u01/oracle/ sys oracle-12ee 1521 BIUMSA && /u01/createAndStartDomain.sh"]
+    entrypoint: ["/bin/bash", "-c", "echo Pelota12* | /u01/wait_for_db.sh /u01/oracle/ sys oracle-12ee 1521 BIUMSA && /u01/createAndStartDomain.sh"]
