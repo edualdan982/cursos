@@ -1,0 +1,54 @@
+
+<div>
+  <div>
+    <h2>Ejemplo Factura</h2>
+    <div>
+      <ul>
+        <li>Id: {{ data.id }}</li>
+        <li>Nombre: {{ data.name }}</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Datos del Client</h3>
+      <ul>
+        <li>{{ data.client.name }} {{ data.client.lastName }}</li>
+        <li>
+          {{ data.client.address.country }} / {{ data.client.address.city }}
+        </li>
+        <li>
+          {{ data.client.address.street }} / {{ data.client.address.number }}
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h3>Datos de la Empresa</h3>
+      <ul>
+        <li>{{ data.company.name }}</li>
+        <li>{{ data.company.fiscalNumber }}</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Datos de la Factura</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>product</th>
+            <th>price</th>
+            <th>quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(item of data.items; track $index){
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.product }}</td>
+            <td>{{ item.price }}</td>
+            <td>{{ item.quantity }}</td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
