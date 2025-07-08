@@ -8,7 +8,7 @@ ARG MSVC_NAME
 
 #Configuramos el la direccion de trabajo, este el contexto de la ruta
 WORKDIR /app/$MSVC_NAME
-COPY ./pom.xml /app
+COPY ./pom.xml /app<
 
 COPY ./$MSVC_NAME/.mvn ./.mvn
 COPY ./$MSVC_NAME/mvnw .
