@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "2-invoice-app": {
+    "3-cart-app": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/2-invoice-app",
+            "outputPath": "dist/3-cart-app",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -57,10 +57,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "2-invoice-app:build:production"
+              "buildTarget": "3-cart-app:build:production"
             },
             "development": {
-              "buildTarget": "2-invoice-app:build:development"
+              "buildTarget": "3-cart-app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "2-invoice-app:build"
+            "buildTarget": "3-cart-app:build"
           }
         },
         "test": {
@@ -91,8 +91,5 @@
         }
       }
     }
-  },
-  "cli": {
-    "analytics": "c221b513-6e17-45cb-9562-1614e3a9fead"
   }
 }
