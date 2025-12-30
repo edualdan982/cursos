@@ -1,0 +1,47 @@
+version: "3.9"
+
+services:
+  oracle-12se:
+    image: oracle/database:12.2.0.1-ee
+    container_name: oracle-12ee
+    hostname: oracle-12ee
+
+    ports:
+      - "1521:1521"   # Listener
+      #- "5500:5500"   # EM Express
+
+    environment:
+      ORACLE_PWD: pelota12*
+      ORACLE_SID: ORCLCDB
+      ORACLE_PDB: CANCER
+      ORACLE_CHARACTERSET: AL32UTF8
+      TZ: America/La_Paz
+      INIT_CPU_COUNT: 6
+      INIT_PROCESSES: 400
+
+    volumes:
+      - ./oradata:/opt/oracle/oradata
+      - ./backup:/home/oracle/backup
+
+    # Memoria compartida (CRÍTICO para Oracle)
+    tmpfs:
+      - /dev/shm:size=6g
+
+    # Límites efectivos en Docker Compose (no Swarm)
+    mem_limit: 20g
+    mem_reservation: 18g
+    cpus: 6.5
+
+    # Evita OOM killer prematuro
+    oom_score_adj: -500
+
+    # Recomendado para bases de datos
+    ulimits:
+      nofile:
+        soft: 102400
+        hard: 102400
+      nproc:
+        soft: 16384
+        hard: 16384
+
+    restart: unless-stopped
