@@ -1,2 +1,0 @@
-//Este para el autocompletado de los @testing-library/react con Jest
-{ "typeAcquisition": { "include": [ "jest" ] } }
