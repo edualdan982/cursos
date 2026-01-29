@@ -66,3 +66,6 @@ print(new_text)
 
 words = new_text.split()
 print(words)
+
+fraction = 'Ⅷ'
+print(fraction.isnumeric())
