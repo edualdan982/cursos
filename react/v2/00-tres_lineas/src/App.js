@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function Square({ value, onSquareClick }) {
+function Square({ value, highlight, onSquareClick }) {
   return (
-    <button className="square" onClick={onSquareClick}>
+    <button className={`square${highlight ? " square-color" : ""}`} onClick={onSquareClick}>
       {value}
     </button>
   );
@@ -22,18 +22,43 @@ function Board({ xIsNext, squares, onPlay }) {
     onPlay(nextSquares);
   }
 
-  const winner = calculateWinner(squares);
+  const dataWinner = calculateWinner(squares);
   let status;
-  if (winner) {
-    status = `El ganador es: ${winner}`;
+  if (dataWinner) {
+    status = `El ganador es: ${dataWinner.winner}`;
   } else {
     status = "Siguiente jugador: " + (xIsNext ? "X" : "O");
   }
 
+  function renderBoard() {
+    const boardElements = [];
+    for (let row = 0; row < 3; row++) {
+      const squaresInRow = [];
+      for (let col = 0; col < 3; col++) {
+        const index = row * 3 + col;
+        squaresInRow.push(
+          <Square
+            key={index}
+            value={squares[index]}
+            onSquareClick={() => handleClick(index)}
+            highlight={dataWinner && dataWinner.line.includes(index)}
+          ></Square>,
+        );
+      }
+      boardElements.push(
+        <div className="board-row" key={row}>
+          {squaresInRow}
+        </div>,
+      );
+    }
+    return boardElements;
+  }
   return (
     <>
       <div className="status">{status}</div>
-      <div className="board-row">
+
+      {renderBoard()}
+      {/* <div className="board-row">
         <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
         <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
         <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
@@ -47,7 +72,7 @@ function Board({ xIsNext, squares, onPlay }) {
         <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+      </div> */}
     </>
   );
 }
@@ -69,7 +94,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c])
-      return squares[a];
+      return { winner: squares[a], line: [a, b, c] };
   }
   return null;
 }
@@ -79,9 +104,10 @@ export default function Game() {
   const [currentMove, setCurrentMove] = useState(0);
   const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
+  const [orderHistory, setOrderHistory] = useState(true);
 
   function handlePlay(nextSquares) {
-    const nextHistory = [... history.slice( 0, currentMove +1), nextSquares];
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares];
     setHistory(nextHistory);
     setCurrentMove(nextHistory.length - 1);
   }
@@ -90,26 +116,38 @@ export default function Game() {
     setCurrentMove(nextMove);
   }
 
-  const moves = history.map((squares, move) => {
-    let description;
-    if (move > 0) {
-      description = "Ir al movimiento #" + move;
-    } else {
-      description = "Ir al inicio del juego";
-    }
+  const moves = history
+    .map((squares, move) => {
+      let description;
+      const row = Math.floor(move / 3) + 1;
+      const col = (move % 3) + 1;
+      if (move > 0) {
+        description = `[${row}, ${col}]: Ir al movimiento #${move}`;
+      } else {
+        description = "Ir al inicio del juego";
+      }
 
-    return (
-      <li key={move}>
-        <button onClick={() => jumpTo(move)}>{description}</button>
-      </li>
-    );
-  });
+      return (
+        <li key={move}>
+          {move === currentMove ? (
+            "El moviento actual"
+          ) : (
+            <button onClick={() => jumpTo(move)}>{description}</button>
+          )}
+        </li>
+      );
+    })
+    .sort(orderHistory ? (a, b) => a.key - b.key : (a, b) => b.key - a.key);
+
   return (
     <div className="game">
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
       <div className="game-info">
+        <button onClick={() => setOrderHistory(!orderHistory)}>
+          Ordenar↕️
+        </button>
         <ol>{moves}</ol>
       </div>
     </div>

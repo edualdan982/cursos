@@ -70,6 +70,9 @@ body {
   text-align: center;
   width: 34px;
 }
+.square-color{
+  background-color: greenyellow;
+}
 
 .board-row:after {
   clear: both;
