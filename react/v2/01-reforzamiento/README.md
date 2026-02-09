@@ -1,27 +1,51 @@
-# Repasamos los javascript
-## Temas puntuales
-En esta sección estaremos teniendo nuestro reforzamiento sobre JavaScript moderno y TypeScript.
-Pasaremos por los conceptos que necesito que dominemos antes de entrar de lleno a React.
+# Repaso de JavaScript y TypeScript
 
-### Puntualmente aprenderemos sobre:
-* Usar const, let y var correctamente.
-* Escribir textos con template strings.
-* Crear y usar interfaces en TypeScript.
-* Trabajar con arreglos y recorrerlos.
-* Definir funciones simples y complejas.
-* Retornar múltiples valores desde funciones.
-* Desestructurar objetos y arreglos.
-* Usar enums para valores constantes.
-* Importar y exportar módulos.
-* Trabajar con promesas.
-* Hacer peticiones con Fetch API.
-* Usar la API de Giphy para obtener GIFs.
-* Optimizar código con buenas prácticas.
-* Escribir código asincrónico con async/await.
-* Realizar tareas prácticas guiadas.
+## 🎯 Objetivo
+En esta sección reforzaremos los fundamentos de **JavaScript moderno** y **TypeScript**.  
+El objetivo es dominar los conceptos clave necesarios antes de entrar de lleno en **React**, asegurando una base sólida y el uso de buenas prácticas.
 
-### Instalación y requesitos
-Se usara los siguientes programas para esta sección:
-1. Node JS v24.10.0
-2. Vite con el Node Package Manager
-3. Opcional.- Node Version Manager(NVM) para el manejo de Node JS. 
+## 📚 Contenidos a reforzar
+Durante este repaso aprenderemos a:
+
+- Utilizar correctamente `const`, `let` y `var`.
+- Escribir textos dinámicos usando **template strings**.
+- Crear y utilizar **interfaces** en TypeScript.
+- Trabajar con **arreglos** y recorrerlos de distintas formas.
+- Definir **funciones simples y complejas**.
+- Retornar **múltiples valores** desde funciones.
+- Aplicar **desestructuración** de objetos y arreglos.
+- Usar **enums** para manejar valores constantes.
+- Importar y exportar **módulos**.
+- Trabajar con **promesas**.
+- Realizar peticiones HTTP usando **Fetch API**.
+- Consumir la **API de Giphy** para obtener GIFs.
+- Escribir código asincrónico con **async / await**.
+- Optimizar el código aplicando **buenas prácticas**.
+- Resolver **ejercicios prácticos guiados**.
+
+## ⚙️ Instalación y requisitos
+
+### 🔧 Herramientas necesarias
+Asegúrate de tener instaladas las siguientes herramientas antes de comenzar:
+
+1. **Node.js**  
+   - Versión requerida: `v24.10.0`  
+   - 👉 https://nodejs.org/
+
+2. **Vite**  
+   - Se utilizará junto con **Node Package Manager (NPM)**  
+   - Instalación:
+     ```bash
+     npm create vite@latest
+     ```
+
+3. **Node Version Manager (NVM)** *(Opcional)*  
+   - Recomendado para gestionar múltiples versiones de Node.js  
+   - Permite instalar y cambiar de versión fácilmente
+
+---
+
+## 🚀 Recomendaciones
+- Verifica tu versión de Node.js con:
+  ```bash
+  node -v
