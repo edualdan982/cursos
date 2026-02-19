@@ -12,3 +12,17 @@ const [letters, numbers] = returnsArrayFn();
 
 
 console.log({ letters, numbers });
+
+
+const useState= (value: string) => {
+  return [
+    value,
+    (newValue: string) =>{
+      console.log(`newValue: ${newValue}`);
+    }
+  ] as const
+}
+
+const [name, setName] = useState('Goku');
+console.log(name);       // Goku
+setName('Vegeta');       // Imprime "Vegeta"
