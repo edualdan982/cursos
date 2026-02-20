@@ -1,4 +1,4 @@
-interface Hero {
+export interface Hero {
   id: number;
   name: string;
   owner: Owner;
@@ -6,7 +6,7 @@ interface Hero {
 
 // type Owner = "DC" | "Marvel";
 
-enum Owner {
+export enum Owner {
   DC = "DC", // 0
   Marvel = "Marvel",
 }
@@ -43,3 +43,5 @@ export const heroes: Hero[] = [
     owner: Owner.DC,
   },
 ];
+
+// export default heroes;
