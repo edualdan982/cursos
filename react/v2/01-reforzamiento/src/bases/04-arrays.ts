@@ -1,10 +1,8 @@
 const myArray: number[] = [1,2,3,4,5,6];
 
-myArray.push(10)
-myArray.push(11)
+const myArray2 = structuredClone(myArray);
 
-console.log(myArray);
+myArray2.push(7);
+// myArray2.push('2');
 
-for(const myNumber of myArray){
-    console.log(myNumber);
-}
+console.log({myArray, myArray2});
