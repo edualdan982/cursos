@@ -27,10 +27,10 @@ export const ItemCounter = ({ name, quantity = 0 }: Props) => {
   const handleSubtract = () => {
     if (count === 0) return;
     setCount(count - 1);
-  };
+  };                                                                                                                                                              
   return (
     <section className={styles.itemRow}>
-      <span className={styles.itemText} style={{ color: count === 1 ? "red" : "black" }}>{name}</span>
+      <span className={styles.itemText} style={{ color: count === 0 ? "red" : "black" }}>{name}</span>
       <button onClick={handleAdd}>+1</button>
       <span>{count}</span>
       <button className={styles['color-red']} onClick={handleSubtract}>-1</button>
