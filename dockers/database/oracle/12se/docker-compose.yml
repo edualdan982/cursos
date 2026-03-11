@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  oracle-12se:
+    image: oracle/database:12.2.0.1-se2
+    container_name: oracle-bd-fact
+    hostname: oracle-bd-fact
+    restart: unless-stopped
+
+    ports:
+      - "1521:1521"
+      # - "5501:5500" # OEM Express (opcional)
+
+    environment:
+      ORACLE_PWD: Pelota12*
+      ORACLE_SID: ORCLCDB
+      ORACLE_PDB: SERV_FACT
+      ORACLE_CHARACTERSET: AL32UTF8
+      TZ: America/La_Paz
+
+    # LÍMITES DE RECURSOS (CRÍTICO)
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 5g
+        reservations:
+          memory: 4g
+
+    # Shared memory para Oracle
+    shm_size: 2g
+
+    # tmpfs para evitar IO innecesario
+    tmpfs:
+      - /dev/shm:size=2048m
+      - /tmp:size=1024m
+
+    ulimits:
+      nofile:
+        soft: 1024
+        hard: 65536
+      nproc: 16384
+
+    volumes:
+      - ./oradata:/opt/oracle/oradata
+      - ./backup:/home/oracle/backup
+
+    #healthcheck:
+      #test: ["CMD", "bash", "-c", "echo 'select 1 from dual;' | sqlplus -s / as sysdba"]
+      #interval: 60s
+      #timeout: 10s
+      #retries: 5
