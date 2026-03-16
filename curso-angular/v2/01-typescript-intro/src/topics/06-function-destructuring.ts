@@ -41,6 +41,6 @@ const[total, taxTotal] = taxCalculation({
     tax: tax
 })
 
-console.log('Total:', total);
-console.log('Tax:', tax);
-console.log('Total Tax:', taxTotal);
+// console.log('Total:', total);
+// console.log('Tax:', tax);
+// console.log('Total Tax:', taxTotal);
