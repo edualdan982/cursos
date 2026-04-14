@@ -25,4 +25,17 @@ describe("MyAwesomeApp", () => {
     const h1 = screen.getByTestId("first-name-title");
     expect(h1.innerHTML).toContain('Edual Dan');
   });
+
+  test("should match snapshot", ()=>{
+    const {container} = render(<MyAwesomeApp/>);
+
+    expect(container).toMatchSnapshot();
+  });
+
+  test("should match snapshot", ()=>{
+    render(<MyAwesomeApp/>);
+    
+    console.log(screen);
+    expect(screen.getByTestId('div-app')).toMatchSnapshot();
+  });
 });
