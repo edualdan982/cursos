@@ -14,13 +14,13 @@ const myStyles: CSSProperties = {
   backgroundColor: "#fafafa",
   borderRadius: 20,
   padding: 10,
-  marginTop: 30
+  marginTop: 30,
 };
 export function MyAwesomeApp() {
   return (
     <div>
-      <h1>{firstName}</h1>
-      <h3>{lastName}</h3>
+      <h1 data-testid="first-name-title"> {firstName} </h1>
+      <h3> {lastName} </h3>
 
       <p>{favoriteGames.join(", ")}</p>
       <p>{2 + 2}</p>
