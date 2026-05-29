@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: always
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50"     # Máximo 50% de un CPU
+          memory: 512M     # Máximo 512 MB de RAM
+        reservations:
+          cpus: "0.25"     # Reserva mínima de 25% de un CPU
+          memory: 256M     # Reserva mínima de 256 MB de RAM
+
+volumes:
+  portainer_data:

@@ -18,20 +18,19 @@ services:
       - ./oradata:/opt/oracle/oradata # Directorio para persistencia de datos
       - ./backup:/home/oracle/backup # Directorio para persistencia de datos
       # - ./archive_logs:/opt/oracle/oradata/ORCLCDB/archive_logs # Creo que no va ser necesario ya que el oradata engloba a esto.
-    tmpfs:
-      - /dev/shm:size=2g
+    #tmpfs:
+    #  - /dev/shm:size=4g
 
-    mem_limit: 8g
-    cpus: 4.0
-    mem_reservation: 6g
+    #mem_limit: 8g
+    #cpus: 4.0
+    #mem_reservation: 6g
 
-    ulimits:
-      nofile:
-        soft: 65536
-        hard: 65536
-      nproc:
-        soft: 8192
-        hard: 8192
+    #ulimits:
+    #  nofile:
+    #    soft: 65536
+    #    hard: 65536
+    #  nproc:
+    #    soft: 8192
+    #    hard: 8192
 
-    restart: unless-stopped
-    
+    #restart: unless-stopped
