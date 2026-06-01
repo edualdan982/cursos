@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis_database
+    restart: always
+    ports:
+      - "6379:6379"
+    environment:
+      - REDIS_PASSWORD=pelota12
+    volumes:
+      - redis_data:/data
+    # Usamos sh -c para que Docker interprete la variable de entorno dentro del comando
+    command: >
+      sh -c "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"
+
+volumes:
+  redis_data:
+    driver: local
+
