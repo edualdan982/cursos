@@ -3,7 +3,7 @@ import { MyAwesomeApp } from "./MyAwesomeApp";
 import { render, screen } from "@testing-library/react";
 
 describe("MyAwesomeApp", () => {
-  test("should render firstname and lastname", () => {
+  test("should render firstName and lastName", () => {
     // Usar Render inicial siempre y cambios los eventos no cambien los valores  de otra manera usar screen.
     const { container } = render(<MyAwesomeApp />);
     // screen.debug();
@@ -17,7 +17,7 @@ describe("MyAwesomeApp", () => {
     expect(h3?.innerHTML).toContain("Sarmiento Garfias");
   });
 
-  test("should render firstname and lastname - screen", () => {
+  test("should render firstName and lastName - screen", () => {
     render(<MyAwesomeApp />);
     screen.debug();
 
