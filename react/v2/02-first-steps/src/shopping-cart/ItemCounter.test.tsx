@@ -29,4 +29,26 @@ describe("ItemCounter", () => {
     expect(screen.getByText("2")).toBeDefined();
 
   });
+
+  test("should decrease count when -1 button is pressed", () =>{
+    // quantity = 5
+    render(<ItemCounter name="Test item" quantity={5}/>);
+
+    const [, buttonDec] = screen.getAllByRole('button');
+    console.log(buttonDec.innerHTML);
+    fireEvent.click(buttonDec);
+
+    expect(screen.getByText("4"));
+  });
+
+  test("should decrease count when 1 is pressed not decrease ", () =>{
+    // quantity = 5;
+    render(<ItemCounter name={"Test name"} quantity={1}/>);
+
+    const [, buttonDec] =  screen.getAllByRole('button');
+    console.log(buttonDec.innerHTML);
+    fireEvent.click(buttonDec);
+    
+    expect(screen.getByText('1'));
+  })
 });

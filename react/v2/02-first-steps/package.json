@@ -36,5 +36,8 @@
   },
   "overrides": {
     "vite": "^8.0.0-beta.13"
+  },
+  "allowScripts": {
+    "@swc/core@1.15.11": true
   }
 }
