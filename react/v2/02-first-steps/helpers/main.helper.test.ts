@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { add, multiply, substract } from "./main.helper";
+import { add, divide, multiply, subtract } from "./main.helper";
 
 describe("add", () => {
   test("should add two positives numbers", () => {
@@ -14,7 +14,7 @@ describe("add", () => {
     expect(result).toBe(a + b);
   });
 
-  test("sloud add two negatives numbers", () => {
+  test("should add two negatives numbers", () => {
     // ! 1. Arrange
     const a = -2;
     const b = -3;
@@ -27,21 +27,21 @@ describe("add", () => {
   });
 });
 
-//? Tarea: Realizar dos test para substract y multiply
-describe("substract", () => {
-  test("should substract two positives numbers", () => {
+//? Tarea: Realizar dos test para subtract y multiply
+describe("subtract", () => {
+  test("should subtract two positives numbers", () => {
     const a = 200;
     const b = 100;
 
-    const result = substract(a, b);
+    const result = subtract(a, b);
     expect(result).toBe(a - b);
   });
 
-  test("should substract two negatives numbers", () => {
+  test("should subtract two negatives numbers", () => {
     const a = -500;
     const b = 100;
 
-    const result = substract(a, b);
+    const result = subtract(a, b);
     expect(result).toBe(a - b);
   });
 });
@@ -64,3 +64,14 @@ describe("multiply", () => {
     expect(result).toBe(a * b);
   });
 });
+
+describe("divide", ()=>{
+  test("should divide two positives numbers", () => {
+    const a = 2;
+    const b = 4;
+
+    const result = divide(a, b);
+
+    expect(result).toBe(a / b);
+  });
+})
