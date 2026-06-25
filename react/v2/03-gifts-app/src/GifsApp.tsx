@@ -4,6 +4,7 @@ import { mockGifs } from "./mock-data/gifs.mock";
 import { CustomHeader } from "./shared/components/CustomHeader";
 import { SearchHeader } from "./shared/components/SearchHeader";
 
+
 export const GifsApp = () => {
   return (
     <>
