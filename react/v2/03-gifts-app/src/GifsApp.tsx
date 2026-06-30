@@ -2,7 +2,8 @@ import { GifList } from "./gifs/GifList";
 import { PreviousSearches } from "./gifs/PreviousSearches";
 import { mockGifs } from "./mock-data/gifs.mock";
 import { CustomHeader } from "./shared/components/CustomHeader";
-import { SearchBar } from "./shared/components/SearchBar";
+import { SearchHeader } from "./shared/components/SearchHeader";
+
 
 export const GifsApp = () => {
   return (
@@ -12,26 +13,16 @@ export const GifsApp = () => {
         title="Buscador de Gifs"
         description="Descubre y comparte el gif perfecto."
       />
-
-      {/* Search */}
-      <SearchBar placeholder="Busca lo que quieras"/>
-      {/* Búsquedas previas */}
-      <PreviousSearches />
-
       {/* Gifs */}
       {/* GifsList: Props => gifs: Gif[] */}
-      <GifList/>
-      <div className="gifs-container">
-        {mockGifs.map((gif) => (
-          <div key={gif.id} className="gif-card">
-            <img src={gif.url} alt={gif.title} />
-            <h3>{gif.title}</h3>
-            <p>
-              {gif.width}x{gif.height}(1.5mb)
-            </p>
-          </div>
-        ))}
-      </div>
+      <SearchHeader placeholder="Buscar gifs" />
+
+      {/* Búsquedas previas */}
+      <PreviousSearches searches={['Roku', 'Sarama', 'Dragon Ball Z']} />
+
+      {/* Gif */}
+      {/* Creer el Componente GifList => Props Gif[]*/}
+      <GifList gifs={mockGifs} />
     </>
   );
 };
