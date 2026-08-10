@@ -9,7 +9,7 @@ export const GifList: FC<Props> = ({ gifs }) => {
   return (
     <div className="gifs-container">
       {gifs.map((gif) => (
-        <GifItem gif={gif} />
+        <GifItem gif={gif} key={gif.id} />
       ))}
     </div>
   );
