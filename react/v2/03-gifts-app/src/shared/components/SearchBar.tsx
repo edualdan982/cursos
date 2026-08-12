@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   placeholder?: string;
@@ -6,6 +6,10 @@ interface Props {
 }
 
 export const SearchBar = ({ placeholder = "Buscar gifs", onQuery }: Props) => {
+  const [query, setQuery] = useState("");
+  useEffect(() =>{
+    console.log("Hola desde el efecto.");
+  });
   const handleSearch = () => {
     onQuery(query);
   };
@@ -16,7 +20,6 @@ export const SearchBar = ({ placeholder = "Buscar gifs", onQuery }: Props) => {
     }
   };
 
-  const [query, setQuery] = useState("");
   return (
     <div className="search-container">
       <input
