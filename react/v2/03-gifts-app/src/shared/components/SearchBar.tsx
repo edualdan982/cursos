@@ -24,6 +24,7 @@ export const SearchBar = ({ placeholder = "Buscar gifs", onQuery }: Props) => {
         placeholder={placeholder}
         value={query}
         onChange={(event) => setQuery(event.target.value)}
+        onKeyDown={handleKeyDown}
       />
       <button onClick={() => handleSearch()}>Buscar</button>
     </div>
