@@ -3,7 +3,7 @@ import { GifList } from "./gifs/GifList";
 import { PreviousSearches } from "./gifs/PreviousSearches";
 import { mockGifs } from "./mock-data/gifs.mock";
 import { CustomHeader } from "./shared/components/CustomHeader";
-import { SearchHeader } from "./shared/components/SearchHeader";
+import { SearchBar } from "./shared/components/SearchBar";
 
 export const GifsApp = () => {
   const [previousTerms, setPreviousTerms] = useState(["dragon ball z"]);
@@ -12,7 +12,7 @@ export const GifsApp = () => {
     console.log(term);
   };
   const handleSearch = (query: string) => {
-    console.log(query);
+    console.log("handleSearch:", query);
   };
 
   return (
@@ -24,7 +24,7 @@ export const GifsApp = () => {
       />
 
       {/* Search */}
-      <SearchHeader placeholder="Buscar gifs" onQuery={handleSearch} />
+      <SearchBar placeholder="Buscar gifs" onQuery={handleSearch} />
 
       {/* Búsquedas previas */}
       <PreviousSearches
