@@ -7,9 +7,15 @@ interface Props {
 
 export const SearchBar = ({ placeholder = "Buscar gifs", onQuery }: Props) => {
   const [query, setQuery] = useState("");
-  useEffect(() =>{
-    console.log("Hola desde el efecto.");
-  });
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => onQuery(query), 700);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [query, onQuery]);
+
   const handleSearch = () => {
     onQuery(query);
   };
