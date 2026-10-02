@@ -287,3 +287,97 @@ exige validación antes de que escriba nada.
 
 @: Referencias. !: Modo Shell.
 [https://opencode.ai](https://opencode.ai)
+
+
+
+## Context engineering
+
+- **Arnes (harness):** el sistema que rodea al modelo y le permite actuar como agente (gestiona contexto, herramientas y ejecución de tareas).
+- **Guardarrailes:** reglas y controles que limitan sus acciones y validan sus resultados (permisos, aprobaciones y comprobaciones de seguridad).
+- **Contexto:** es la informacion que tiene disponible para realizar una tarea (instrucciones, conversación, archivos, documentación y resultados de herramientas)
+
+## Contexto
+
+- **Markdown:** formato de texto sencillo para estructurar documentos con titulos, listas, enlaces y bloques de código.
+- **AGENTS.md:** archivo con instrucciones para orientar a los agentes sobre cómo trabajar en un proyecto.
+
+
+# AGENTS.md - [Nombre del proyecto]
+
+[Una o dos frases: qué es, para quién y cuál es su objetivo.]
+
+## Stack y estructura
+- Tecnologias y versiones clave.
+- Que hay en cada carpeta o archivo importante (solo lo que no es
+obvio).
+
+## Comandos
+- Como ejecutar, probar, hacer lint y compilar (comandos exactos,
+copiables).
+
+## Convenciones
+- Estilo de código, nombres, idioma de comentarios y textos.
+- Patrones que hay que seguir (y cuál es el archivo de referencia).
+
+## Reglas de dominio / trampas conocidas
+- Lo que es facil hacer mal y el agente no puede deducir leyendo el
+código.
+
+## Forma de trabajar
+- Cuándo planificar antes de tocar código, tamaño de los cambios, qué
+explicar al terminar.
+
+## Límites
+- ✅ Siempre: lo que debe hacer sin preguntar.
+- ⚠️ A Pregunta antes: dependencias nuevas, archivos nuevos, cambios en el formato de datos ...
+- 🚫 Nunca: lo que no debe tocar bajo ningun concepto.
+
+## Verificación
+- Como comprobar que un cambio funciona antes de darlo
+
+
+AGENTS.md y Reglas
+- Coamndo /init: genera el AGENTS.md (agents.md)[https://agents.md]
+
+¿Qué incluir?
+
+```Mermaid
+    ---
+    config:
+    look: classic
+    fontFamily: '''Open Sans Variable'', sans-serif'
+    themeVariables:
+        fontFamily: '''Open Sans Variable'', sans-serif'
+    layout: dagre
+    ---
+    flowchart TB
+        ST[Stack tecnologico]
+        CD[Convenciones de código]
+        P[Patrones]
+        PH[Prohibiciones]
+        
+        EP[Estructuras Proyectos]
+        FT[Flujos de trabajo]
+        TCI[Testing, CI/CD]
+        EC[Estilo de commits y PRs]
+        UK[...]
+
+        ST --> EP
+        CD --> FT
+        P --> TCI
+        PH --> EC
+
+        EP --> UK
+        FT --> UK
+        TCI --> UK
+        EC --> UK
+```
+
+## Modo Plan (Agente)
+
+- **Shift + TAB:** alterna entre el modo Build y Plan.
+    - El modo plan permite al agente analizar una tarea, consultar el proyecto y proponer los pasos antes de ejecutarlos.
+    - Sirve para aclarar requisitos, detectar riesgos y revisar el enfoque contigo antes de modificar el código.
+
+
+
