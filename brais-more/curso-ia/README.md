@@ -379,5 +379,7 @@ AGENTS.md y Reglas
     - El modo plan permite al agente analizar una tarea, consultar el proyecto y proponer los pasos antes de ejecutarlos.
     - Sirve para aclarar requisitos, detectar riesgos y revisar el enfoque contigo antes de modificar el código.
 
+## Tarea
 
+Realiza la tarea de implementar una nueva funcionalidad en el proyecto de racha de aprendisaje.
 
