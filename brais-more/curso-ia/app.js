@@ -1,4 +1,5 @@
 const STORAGE_KEY = "study-diary-sessions";
+const THEME_KEY = "study-diary-theme";
 
 function getToday() {
     const now = new Date();
@@ -105,7 +106,67 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
+// --- Tema ---
+function getInitialTheme() {
+    const saved = localStorage.getItem(THEME_KEY);
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    const icon = document.getElementById("themeIcon");
+    if (icon) {
+        icon.textContent = theme === "dark" ? "🌙" : "☀️";
+    }
+    const toggle = document.getElementById("themeToggle");
+    if (toggle) {
+        toggle.setAttribute("aria-label", theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro");
+    }
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme") || "light";
+    const next = current === "dark" ? "light" : "dark";
+    localStorage.setItem(THEME_KEY, next);
+    applyTheme(next);
+}
+
+// --- Fecha actual en navbar ---
+function updateCurrentDate() {
+    const dateEl = document.getElementById("currentDate");
+    if (dateEl) {
+        dateEl.textContent = formatDate(getToday());
+    }
+}
+
+function startDateUpdater() {
+    updateCurrentDate();
+    // Actualizar cada minuto para capturar el cambio de día
+    setInterval(updateCurrentDate, 60 * 1000);
+}
+
 function init() {
+    // Tema
+    const theme = getInitialTheme();
+    applyTheme(theme);
+
+    const themeToggle = document.getElementById("themeToggle");
+    if (themeToggle) {
+        themeToggle.addEventListener("click", toggleTheme);
+    }
+
+    // Escuchar cambios de preferencia del sistema
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
+        if (!localStorage.getItem(THEME_KEY)) {
+            applyTheme(e.matches ? "dark" : "light");
+        }
+    });
+
+    // Fecha actual
+    startDateUpdater();
+
+    // Formulario
     const form = document.getElementById("sessionForm");
     const dateInput = document.getElementById("date");
 

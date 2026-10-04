@@ -7,10 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" type="button">
+            <span id="themeIcon">☀️</span>
+        </button>
+        <h1 class="navbar-title">Diario de Estudio</h1>
+        <div class="navbar-date" aria-live="polite">
+            <span class="date-icon" aria-hidden="true">📅</span>
+            <span id="currentDate">2026-10-04</span>
+        </div>
+    </nav>
+
     <main class="container">
-        <header>
-            <h1>Diario de Estudio</h1>
-            <div class="streaks">
+        <header class="streaks-header">
+            <div class="streaks" id="streaksContainer">
                 <div class="streak" id="streak">
                     <span class="streak-fire">🔥</span>
                     <span class="streak-number" id="streakNumber">0</span>

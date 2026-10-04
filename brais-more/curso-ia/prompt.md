@@ -55,3 +55,28 @@
     3. Los casos limite y las dudas que debo decidir yo antes de empezar.
     4. Que actualizaras en AGENTS.md y en MEMORY.md.
 ```
+
+
+# < Nueva funionalidad >
+```
+    Quiero añadir responsividad a la pagina y un modo oscuro, 
+    (esto para una mejor accesibilidad), ademas de field para
+    montrar la fecha actual.
+
+    La ubicación del boton de tema: oscuro y claro podemos usas un navbar:
+    1. Posición que este a la izquierda
+    2. Usa los iconos de ☀️ (tema claro), 🌙(tema oscuro)
+    
+    Agrega un dato de la fecha actual en el nabvar:
+    1. Posición en la parte derecha del nabvar.
+    2. Puede usar un icono de fecha antes del dato: 📅
+    3. El formato de vizualización que sea yyyy-mm-dd
+
+```    
+## Puliendo el comando
+```
+    Respuesta a preguntas:
+    1. Pon el titulo en navbar al centro
+    2. Solo pon el icono de acuerdo al tema vigente: Ej. Claro -> ☀️, Oscuro -> 🌙
+    3. No solo al cargar la página.
+```
