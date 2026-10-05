@@ -132,6 +132,69 @@ function toggleTheme() {
     applyTheme(next);
 }
 
+// --- Total minutos esta semana ---
+function getWeekStartDate() {
+    const today = getToday();
+    const day = today.getDay(); // 0=dom, 1-lun, 2-mar, ...
+    const diff = day === 0 ? -6 : 1 - day; // si es dom (0), restar 6 para ir al lunes anterior; otherwise restar para ir al lunes
+    const weekStart = new Date(today);
+    weekStart.setDate(today.getDate() + diff);
+    weekStart.setHours(0, 0, 0, 0);
+    return weekStart;
+}
+
+function calculateWeeklyMinutes(sessions) {
+    const weekStart = getWeekStartDate();
+    const today = getToday();
+    let total = 0;
+
+    for (const session of sessions) {
+        const sessionDate = parseDate(session.date);
+        if (sessionDate >= weekStart && sessionDate <= today) {
+            total += session.minutes;
+        }
+    }
+
+    return total;
+}
+
+function renderWeeklyTotal(total) {
+    const el = document.getElementById("weeklyTotal");
+    if (el) {
+        el.textContent = `${total} min esta semana`;
+    }
+}
+
+// --- Total días este mes ---
+function getMonthStartDate() {
+    const today = getToday();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1; // getMonth() es 0-indexado
+    return `${year}-${month.toString().padStart(2, '0')}-01`;
+}
+
+function calculateDaysThisMonth(sessions) {
+    const monthStart = getMonthStartDate();
+    const today = getToday();
+    const datesWithSessions = new Set();
+
+    for (const session of sessions) {
+        // Only count sessions from this month onwards
+        if (session.date >= monthStart && session.date <= formatDate(today)) {
+            datesWithSessions.add(session.date);
+        }
+    }
+
+    return datesWithSessions.size;
+}
+
+function renderDaysThisMonth(total) {
+    const el = document.getElementById("daysThisMonth");
+    if (el) {
+        el.textContent = `${total} días este mes`;
+    }
+}
+
 // --- Fecha actual en navbar ---
 function updateCurrentDate() {
     const dateEl = document.getElementById("currentDate");
@@ -187,6 +250,8 @@ function init() {
 
         renderStreak(calculateStreak(sessions), calculateBestStreak(sessions));
         renderSessions(sessions);
+        renderWeeklyTotal(calculateWeeklyMinutes(sessions));
+        renderDaysThisMonth(calculateDaysThisMonth(sessions));
 
         form.reset();
         dateInput.value = formatDate(getToday());
@@ -195,6 +260,8 @@ function init() {
     const sessions = loadSessions();
     renderStreak(calculateStreak(sessions), calculateBestStreak(sessions));
     renderSessions(sessions);
+    renderWeeklyTotal(calculateWeeklyMinutes(sessions));
+    renderDaysThisMonth(calculateDaysThisMonth(sessions));
 }
 
 document.addEventListener("DOMContentLoaded", init);
