@@ -1,4 +1,4 @@
-# Curso de IA 
+# Curso de IA - DIA 1
 
 ## LLM (Large Language Model)
 
@@ -337,7 +337,7 @@ explicar al terminar.
 
 
 AGENTS.md y Reglas
-- Coamndo /init: genera el AGENTS.md (agents.md)[https://agents.md]
+- Coamndo /init: genera el AGENTS.md [agents.md](https://agents.md)
 
 ¿Qué incluir?
 
@@ -384,5 +384,23 @@ AGENTS.md y Reglas
 Realiza la tarea de implementar una nueva funcionalidad en el proyecto de racha de aprendisaje.
 
 
+# Curso de IA - DIA 2
 
+## Comando personalizados
 
+- **Custom Comand:** es un prompt reutilizable que ejecutas escribiendo /comando. Permite repetir tareas habituales sin volver a escribir las instrucciones.
+- **Creación:** 
+[Docs URL](https://opencode.ai/v2/docs/commands)
+    1. Crea un archivo Markdown en .opencode/commands/
+    2. Añade una descripción y las instrucciones
+    3. Reinicia OpenCode y ejecutalo(/restart o /exit)
+
+## Skills
+
+- **Skill(/skill):** es un conjunto de instrucciones reutilizables que enseña al agente cómo realizar una tarea concreta. El agente puede cargar las instrucciones completas cuando las necesita(o utilizando / o @)
+- **Creación:**
+    1. Crea un archivo Markdown en .opencode(o agents)/skills/nombre_skill/
+    2. Añade un archivo SKILL.md con instrucciones
+    3. Reinicia Opencode y ejecútalo.
+
+Rercursos: [https://www.skills.sh](https://www.skills.sh)
