@@ -20,8 +20,11 @@ xdg-open index.html     # Linux
 - Racha actual = días consecutivos con ≥1 sesión que terminan **hoy** (fecha local)
 - Si hoy no hay sesión pero ayer sí, la racha sigue viva hasta medianoche
 - Mejor racha = racha consecutiva más larga histórica (solo días con sesión real, sin regla "viva")
+- **Total minutos esta semana**: suma de minutos de sesiones entre lunes y hoy (formato `yyyy-mm-dd`); se calcula al renderizar
+- **Total días este mes**: cuenta de días únicos con sesión entre el 1 del mes y hoy (múltiples sesiones mismo día cuentan como 1); se calcula al renderizar
 - Datos guardados en `localStorage` con clave: `study-diary-sessions`
 - Sesión: `{ date: "YYYY-MM-DD", topic: string, minutes: number }`
+- Formato de fecha en navbar: `yyyy-mm-dd`, actualizado cada minuto
 
 ## Forma de trabajar
 - Haz solo lo que se pide: no añadas funcionalidades por tu cuenta.
