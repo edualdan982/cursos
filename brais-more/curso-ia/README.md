@@ -417,3 +417,9 @@ Rercursos: [https://www.skills.sh](https://www.skills.sh)
 Recursos:
 - [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
 - [https://opencode.ai/v2/docs/mcp-servers](https://opencode.ai/v2/docs/mcp-servers)
+
+## Pruebas del MCP
+Mi modelo no es tan potente para poder realizar ciertas cosas. Dejo el comando para el AGENTS.md:
+```text
+    No hay tests automaticos. Despues de cada cambio, verifica con el MCP de Chrome DevTools: Abre `index.html`, prueba la funcionalidad, revisa la consola y comprueba la vista móvil.
+```
