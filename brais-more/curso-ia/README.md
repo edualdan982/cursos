@@ -404,3 +404,16 @@ Realiza la tarea de implementar una nueva funcionalidad en el proyecto de racha 
     3. Reinicia Opencode y ejecútalo.
 
 Rercursos: [https://www.skills.sh](https://www.skills.sh)
+
+
+## Model Context Protocol (MCP)
+
+- **MCP (/mcps):** es un protocolo que permite conectar al agente con herramientas y datos externos. Un servidor MCP proporciona esas capacidades: consultar documentación, acceder a servicios o interactuar con bases de datos.
+- **Creación:**
+  1. Crea o edita opencode. json en la raíz.
+  2. Añade la configuración del servidor mcp
+  3. Reinicia OpenCode y ejecútalo
+
+Recursos:
+- [https://modelcontextprotocol.io](https://modelcontextprotocol.io)
+- [https://opencode.ai/v2/docs/mcp-servers](https://opencode.ai/v2/docs/mcp-servers)
