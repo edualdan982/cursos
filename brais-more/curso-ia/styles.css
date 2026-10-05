@@ -116,6 +116,30 @@ body {
     flex-shrink: 0;
 }
 
+.weekly-total {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+    order: 3;
+    flex-shrink: 0;
+}
+
+.days-this-month {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    white-space: nowrap;
+    order: 4;
+    flex-shrink: 0;
+}
+
 .date-icon {
     font-size: 1rem;
 }
