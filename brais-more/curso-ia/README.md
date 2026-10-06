@@ -24,7 +24,7 @@ en tu equipo o en servidores remotos.
 
 Resources: 
 - [https://artificialanalysis.ai](https://artificialanalysis.ai)
-- [https://11m-stats.com](https://11m-stats.com)
+- [https://llm-stats.com](https://llm-stats.com)
 
 
 ## Fundamentes de los LLM
@@ -419,7 +419,198 @@ Recursos:
 - [https://opencode.ai/v2/docs/mcp-servers](https://opencode.ai/v2/docs/mcp-servers)
 
 ## Pruebas del MCP
+Prueba del MCP
+```text
+    Usa Chrome DevTools para probar el Diario de Estudio:
+
+    1. Abre index.html en Chrome. 
+    2. Registra tres sesiones: hoy, ayer y anteayer. 
+    3. Comprueba que la racha muestra 3 y que la mejor racha es correcta. 
+    4. Revisa la consola por si hay errores. 
+    5. Haz una captura en tamaño móvil (375 px de ancho). 
+    
+    Dime qué has comprobado y si has encontrado algún problema. 
+```
+
 Mi modelo no es tan potente para poder realizar ciertas cosas. Dejo el comando para el AGENTS.md:
 ```text
     No hay tests automaticos. Despues de cada cambio, verifica con el MCP de Chrome DevTools: Abre `index.html`, prueba la funcionalidad, revisa la consola y comprueba la vista móvil.
 ```
+
+## Estructura SDD
+```text
+project/ 
+├── .opencode/,.agents/... 
+├── AGENTS.md, MEMORY.md 
+├── docs/ 
+│ └── constitution.md 
+├── specs/ 
+│ └── 001-nombre-spec/ 
+│ │ ├── spec.md 
+│ │ ├── plan.md 
+│ │ └── tasks.md 
+│ └── 002-nombre-spec/... 
+│ └── 003-nombre-spec/... 
+├── tests/ 
+└── <CÓDIGO DEL PROYECTO> 
+```
+
+## SDD paso a paso 
+- **Paso 1:** Constitución (una vez por proyecto - constitution.md) 
+- **Paso 2:** Especificación (spec.md) 
+- **Paso 3:** Clarificación 
+- **Paso 3:** Clarificación 
+- **Paso 4:** Planificación (plan.md) 
+- **Paso 5:** Tareas (tasks.md) 
+- **Paso 6:** Implementación 
+- **Paso 7:** Validación 
+- **Loop al paso 2:** Mantenimiento
+
+## Paso 1: Constitución
+Ejemplo de Prompt para crear el archivo constitution.md
+
+```text
+Vamos a crear la constitución del Diario de Estudio. Es un proyecto que ya existe: lee 
+AGENTS.md, MEMORY.md y el código antes de proponer nada. Es un proyecto educativo que 
+debe poder mantener alguien que empieza a programar.
+
+Proponme un docs/constitution.md con 6 principios innegociables, cortos y verificables, 
+que cubran: simplicidad del stack, relación entre spec y código,separación entre lógica e 
+interfaz, política de tests (sin instalar dependencias), protección de los datos del 
+usuario e idioma del código y los textos. Máximo 15 líneas. Espera mi aprobación. 
+```
+
+## docs/constitution.md de nuestro Diario de Estudio
+
+```text
+# Constitución — Diario de Estudio 
+Principios innegociables. Toda spec, plan y tarea debe cumplirlos. 
+1. **Simplicidad primero**: HTML, CSS y JS puros. Sin dependencias ni build. Funciona 
+abriendo index.html con doble clic. 
+2. **La spec manda**: nada se implementa si no está en la spec activa. Si falta una 
+decisión, se para y se pregunta. 
+3. **Lógica separada de interfaz**: los cálculos (fechas, rachas, estadísticas) son 
+funciones puras, sin DOM ni localStorage, que reciben "hoy" como parámetro. 
+4. **Tests como puerta**: la lógica se prueba con `node --test`, sin instalar paquetes. 
+Prohibido avanzar con tests en rojo. 
+5. **Los datos del usuario son sagrados**: localStorage con compatibilidad hacia atrás y 
+fechas siempre en hora local. Nunca se pierde una sesión. 
+6. **Idioma**: código en inglés; interfaz y documentación en español. 
+```
+
+Dentro de nuestro AGENTS.md agregamos las siguientes líneas para hacer referencia a SDD: 
+
+```
+## Comandos 
+- Tests: `node --test` 
+## Reglas 
+- Lee `docs/constitution.md` y la spec activa (`specs/NNN-*/`) antes de tocar código. 
+```
+
+## Paso 2: Especificación (spec.md) 
+Ejemplo de Prompt para crear una nueva especificación
+
+```text
+NO escribas código en ningún momento. Vamos a redactar la especificación de una nueva funcionalidad del Diario de Estudio. Lee docs/constitution.md.
+
+Idea inicial: un mapa de calor tipo GitHub que muestre los días estudiados de las últimas semanas, donde cuantos más minutos estudiados, más intenso es el color del día.
+
+Tu trabajo: 
+1. Hazme preguntas de UNA en UNA para eliminar ambigüedades (casos límite, comportamiento con errores, qué queda fuera de esta versión). Máximo 5 preguntas. 
+2. Con mis respuestas, genera specs/001-heat-map/spec.md con esta estructura: contexto y objetivo, usuarios, historias de usuario, requisitos funcionales numerados (RF-x) con criterios de aceptación en notación EARS 
+ en español, requisitos no funcionales, casos límite, fuera de alcance, criterios de finalización y dudas abiertas marcadas como [NECESITA ACLARACIÓN]. 
+3. El QUÉ y el POR QUÉ. Nada de stack, arquitectura ni nombres de archivos: eso irá en el plan. 
+```
+
+## Plantilla genérica para especificaciones (spec.md
+Plantilla para generar un spec:
+
+```text
+# Spec NNN — <Nombre de la funcionalidad>
+
+## Contexto y objetivo 
+<Qué problema resuelve y por qué merece la pena. Un párrafo.> 
+
+## Usuarios / actores 
+<Quién lo usa.> 
+
+## Historias de usuario 
+- H1: Como <rol> quiero <acción> para <beneficio>. 
+
+## Requisitos funcionales (criterios de aceptación en EARS) 
+- RF-1: CUANDO <evento>, EL SISTEMA <respuesta> (salida/resultado esperado). 
+- RF-2: SI <condición no deseada>, ENTONCES EL SISTEMA <respuesta>. 
+- RF-3: MIENTRAS <estado>, EL SISTEMA <respuesta>. 
+- RF-4: EL SISTEMA <comportamiento permanente>. 
+
+## Requisitos no funcionales 
+<Solo los que apliquen: rendimiento, seguridad, plataformas, idioma...> 
+
+## Casos límite 
+<Vacíos, duplicados, datos corruptos, límites, concurrencia...>
+
+## Fuera de alcance 
+<Lo que explícitamente NO se hace en esta iteración.> 
+
+## Criterios de finalización 
+<Ej.: todos los RF con test en verde + demo manual del flujo principal.> 
+
+## Dudas abiertas 
+- [NECESITA ACLARACIÓN] <duda> 
+```
+
+
+## Paso 3: Clarificación
+Ejemplo de Prompt para clarificar una especificación
+
+```text
+Revisa specs/001-heat-map/spec.md como si fueras un QA muy profesional. 
+Lista: (1) ambigüedades restantes, (2) contradicciones entre requisitos, 
+(3) casos límite no cubiertos, (4) conflictos con docs/constitution.md. 
+No propongas soluciones todavía: solo detecta. Formato: lista numerada. 
+```
+
+## Paso 4: Planificación (plan.md)
+Ejemplo de Prompt para crear planificación de la especificación 
+```text
+Lee docs/constitution.md y specs/001-heat-map/spec.md. NO escribas 
+código. Genera specs/001-heat-map/plan.md con: qué archivos se crean o 
+modifican y qué responsabilidad tiene cada uno, qué funciones puras de lógica 
+se necesitan (con "hoy" como parámetro), algoritmo del mapa en pseudocódigo, 
+cómo se pinta en la interfaz, decisiones técnicas justificadas (y su 
+alternativa descartada) y estrategia de tests con node --test. Todo debe 
+respetar la constitución y cubrir todos los RF. Marca qué RF cubre cada parte. 
+```
+
+## Paso 5: Tareas (tasks.md)
+Ejemplo de Prompt para crear las tareas a partir de la planificación
+
+```
+A partir de spec.md y plan.md, genera specs/001-heat-map/tasks.md: 
+tareas pequeñas (máx. 20-30 min cada una), en orden de dependencia, cada una 
+con los RF que cubre y una línea "Hecho cuando:" verificable. Usa checkboxes. 
+```
+
+## Paso 6: Implementación 
+Ejemplo de Prompt para implementar las tareas 
+```text
+Implementa SOLO la tarea T1 de specs/001-heat-map/tasks.md, siguiendo 
+plan.md y la constitución. Escribe primero los tests, luego el código. 
+Ejecuta node --test y muéstrame el resultado. Al terminar: marca T1 en 
+tasks.md, indica qué RF cubre y PÁRATE. No empieces T2. 
+```
+
+## Paso 7: Validación
+Ejemplo de Prompt para validar la especificación implementada
+```
+Recorre specs/001-heat-map/spec.md requisito por requisito. Para cada 
+uno indica qué test lo cubre y el resultado de ejecutarlo. Los RF de interfaz 
+14 
+None
+que no se puedan testear con node --test, verifícalos con Chrome DevTools 
+(incluida la vista móvil). Si algún RF no está cubierto o falla, dilo 
+claramente. Después comprueba los criterios de finalización y dame un 
+veredicto: ¿la spec está cumplida? 
+```
+
+**Nota:** *el paso de Clarificación puede realizarse nuevamente luego de los pasos 4 y 5 si algo no está claro.* 

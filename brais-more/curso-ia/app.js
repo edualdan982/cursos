@@ -67,6 +67,10 @@ function calculateBestStreak(sessions) {
 function renderStreak(streak, bestStreak) {
     document.getElementById("streakNumber").textContent = streak;
     document.getElementById("bestStreakNumber").textContent = bestStreak;
+    const label = document.getElementById("streakLabel");
+    if (label) {
+        label.textContent = streak === 1 ? "día" : "días";
+    }
 }
 
 function renderSessions(sessions) {
@@ -188,10 +192,148 @@ function calculateDaysThisMonth(sessions) {
     return datesWithSessions.size;
 }
 
+// --- Mapa de calor: lógica pura ---
+function sumMinutesByDate(sessions) {
+    const totals = {};
+    for (const session of sessions) {
+        totals[session.date] = (totals[session.date] || 0) + session.minutes;
+    }
+    return totals;
+}
+
+function levelForMinutes(minutes) {
+    if (minutes <= 0) return 0;
+    if (minutes <= 15) return 1;
+    if (minutes <= 45) return 2;
+    if (minutes <= 90) return 3;
+    return 4;
+}
+
+function weekStartMonday(date) {
+    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const day = d.getDay(); // 0=dom
+    const diff = day === 0 ? -6 : 1 - day;
+    d.setDate(d.getDate() + diff);
+    return d;
+}
+
+function buildHeatMapData(sessions, today, weeks) {
+    const minutesByDate = sumMinutesByDate(sessions);
+    const currentMonday = weekStartMonday(today);
+    const start = new Date(currentMonday);
+    start.setDate(start.getDate() - (weeks - 1) * 7);
+    const end = new Date(currentMonday);
+    end.setDate(end.getDate() + 6);
+
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const days = [];
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        const dateStr = formatDate(d);
+        const minutes = minutesByDate[dateStr] || 0;
+        const isFuture = d > todayMidnight;
+        days.push({
+            date: dateStr,
+            minutes,
+            isFuture,
+            level: isFuture ? "future" : levelForMinutes(minutes),
+        });
+    }
+    return days;
+}
+
+function filterSessionsByDate(sessions, date) {
+    return sessions.filter(s => s.date === date);
+}
+
+function formatTooltip(dateStr, minutes) {
+    const date = parseDate(dateStr);
+    const options = { weekday: "short", day: "numeric", month: "short" };
+    const label = date.toLocaleDateString("es-ES", options);
+    return minutes > 0 ? `${label} — ${minutes} min` : `${label} — sin sesiones`;
+}
+
+// --- Mapa de calor: interfaz ---
+const HEAT_WEEKS_KEY = "study-diary-heat-weeks";
+let heatWeeks = 12;
+let activeDateFilter = null;
+
+function getHeatWeeks() {
+    const saved = parseInt(localStorage.getItem(HEAT_WEEKS_KEY), 10);
+    return [8, 12, 26, 52].includes(saved) ? saved : 12;
+}
+
+function renderHeatMap() {
+    const grid = document.getElementById("heatMapGrid");
+    if (!grid) return;
+    const sessions = loadSessions();
+    const days = buildHeatMapData(sessions, getToday(), heatWeeks);
+    grid.style.gridTemplateColumns = `repeat(${heatWeeks}, 12px)`;
+    grid.innerHTML = days.map(day => {
+        const levelClass = day.level === "future" ? "level-future" : `level-${day.level}`;
+        return `<div class="heat-cell ${levelClass}" data-date="${day.date}" data-minutes="${day.minutes}" tabindex="0" role="button" aria-label="${formatTooltip(day.date, day.minutes)}"></div>`;
+    }).join("");
+}
+
+function applyDateFilter(date) {
+    activeDateFilter = date;
+    const sessions = loadSessions();
+    const notice = document.getElementById("filterNotice");
+    if (date) {
+        renderSessions(filterSessionsByDate(sessions, date));
+        if (notice) {
+            notice.hidden = false;
+            notice.querySelector("span").textContent = `Mostrando sesiones de ${formatDisplayDate(date)}`;
+        }
+    } else {
+        renderSessions(sessions);
+        if (notice) notice.hidden = true;
+    }
+}
+
+function initHeatMap() {
+    const select = document.getElementById("heatWeeksSelect");
+    heatWeeks = getHeatWeeks();
+    if (select) {
+        select.value = String(heatWeeks);
+        select.addEventListener("change", () => {
+            heatWeeks = parseInt(select.value, 10);
+            localStorage.setItem(HEAT_WEEKS_KEY, String(heatWeeks));
+            renderHeatMap();
+        });
+    }
+
+    const grid = document.getElementById("heatMapGrid");
+    const tooltip = document.getElementById("heatTooltip");
+    if (grid && tooltip) {
+        grid.addEventListener("mouseover", (e) => {
+            const cell = e.target.closest(".heat-cell");
+            if (!cell) return;
+            tooltip.textContent = formatTooltip(cell.dataset.date, parseInt(cell.dataset.minutes, 10));
+            tooltip.style.left = `${cell.offsetLeft}px`;
+            tooltip.style.top = `${cell.offsetTop - 28}px`;
+            tooltip.hidden = false;
+        });
+        grid.addEventListener("mouseout", () => { tooltip.hidden = true; });
+        grid.addEventListener("click", (e) => {
+            const cell = e.target.closest(".heat-cell");
+            if (!cell || cell.classList.contains("level-future")) return;
+            const date = cell.dataset.date;
+            applyDateFilter(activeDateFilter === date ? null : date);
+        });
+    }
+
+    const clearBtn = document.getElementById("clearFilterBtn");
+    if (clearBtn) {
+        clearBtn.addEventListener("click", () => applyDateFilter(null));
+    }
+
+    renderHeatMap();
+}
+
 function renderDaysThisMonth(total) {
     const el = document.getElementById("daysThisMonth");
     if (el) {
-        el.textContent = `${total} días este mes`;
+        el.textContent = total === 1 ? "1 día este mes" : `${total} días este mes`;
     }
 }
 
@@ -252,6 +394,10 @@ function init() {
         renderSessions(sessions);
         renderWeeklyTotal(calculateWeeklyMinutes(sessions));
         renderDaysThisMonth(calculateDaysThisMonth(sessions));
+        if (activeDateFilter) {
+            applyDateFilter(activeDateFilter);
+        }
+        renderHeatMap();
 
         form.reset();
         dateInput.value = formatDate(getToday());
@@ -262,6 +408,20 @@ function init() {
     renderSessions(sessions);
     renderWeeklyTotal(calculateWeeklyMinutes(sessions));
     renderDaysThisMonth(calculateDaysThisMonth(sessions));
+    initHeatMap();
 }
 
-document.addEventListener("DOMContentLoaded", init);
+if (typeof document !== "undefined") {
+    document.addEventListener("DOMContentLoaded", init);
+}
+
+if (typeof module !== "undefined" && module.exports) {
+    module.exports = {
+        sumMinutesByDate,
+        levelForMinutes,
+        weekStartMonday,
+        buildHeatMapData,
+        filterSessionsByDate,
+        formatTooltip,
+    };
+}

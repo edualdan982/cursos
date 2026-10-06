@@ -31,6 +31,12 @@ xdg-open index.html     # Linux
 - Cambios pequeños y enfocados; no reescribas lo que ya funciona.
 - Al terminar, resume qué has cambiado y cualquier decisión que deba revisar.
 
+## Comandos 
+- Tests: `node --test` 
+
+## Reglas 
+- Lee `docs/constitution.md` y la spec activa (`specs/NNN-*/`) antes de tocar código. 
+
 ## Memoria
 - Al empezar, lee 'MEMORY.md` para conocer el estado del proyecto y las decisiones tomadas.
 - Al terminar una tarea, actualízalo: estado actual, decisiones importantes (con su porqué) y errores a evitar.

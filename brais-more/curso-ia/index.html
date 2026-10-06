@@ -14,7 +14,7 @@
         <h1 class="navbar-title">Diario de Estudio</h1>
         <div class="navbar-date" aria-live="polite">
             <span class="date-icon" aria-hidden="true">📅</span>
-            <span id="currentDate">2026-10-04</span>
+            <span id="currentDate"></span>
         </div>
         <div class="weekly-total" id="weeklyTotal">0 min esta semana</div>
         <div class="days-this-month" id="daysThisMonth">0 días este mes</div>
@@ -26,7 +26,7 @@
                 <div class="streak" id="streak">
                     <span class="streak-fire">🔥</span>
                     <span class="streak-number" id="streakNumber">0</span>
-                    <span class="streak-label">días</span>
+                    <span class="streak-label" id="streakLabel">días</span>
                 </div>
                 <div class="streak best" id="bestStreak">
                     <span class="streak-icon">🏆</span>
@@ -35,6 +35,31 @@
                 </div>
             </div>
         </header>
+
+        <section class="heat-map" aria-label="Mapa de calor de estudio">
+            <div class="heat-map-header">
+                <h2>Actividad</h2>
+                <select id="heatWeeksSelect" aria-label="Semanas mostradas">
+                    <option value="8">8 semanas</option>
+                    <option value="12" selected>12 semanas</option>
+                    <option value="26">26 semanas</option>
+                    <option value="52">52 semanas</option>
+                </select>
+            </div>
+            <div class="heat-map-body">
+                <div id="heatMapGrid" class="heat-map-grid"></div>
+                <div id="heatTooltip" class="heat-tooltip" hidden></div>
+            </div>
+            <div class="heat-legend" aria-hidden="true">
+                <span>Menos</span>
+                <span class="heat-cell level-0"></span>
+                <span class="heat-cell level-1"></span>
+                <span class="heat-cell level-2"></span>
+                <span class="heat-cell level-3"></span>
+                <span class="heat-cell level-4"></span>
+                <span>Más</span>
+            </div>
+        </section>
 
         <form id="sessionForm" class="form">
             <div class="form-group">
@@ -55,6 +80,9 @@
         <section class="sessions">
             <h2>Sesiones</h2>
             <ul id="sessionsList" class="sessions-list"></ul>
+            <p id="filterNotice" class="filter-notice" hidden>
+                <span></span> <button type="button" id="clearFilterBtn" class="btn-link">Ver todo</button>
+            </p>
             <p id="emptyMessage" class="empty-message" hidden>No hay sesiones aún. ¡Añade tu primera sesión!</p>
         </section>
     </main>

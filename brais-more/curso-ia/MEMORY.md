@@ -4,6 +4,9 @@ Memoria del proyecto entre sessiones. Maximo ~50 líneas: resume o elimina lo qu
 
 ## Estado Actual
 - v1.4 total días este mes en navbar
+- Verificado con Chrome DevTools (06-10-2026): 3 sesiones (hoy/ayer/anteayer) → racha 3, mejor racha 3, sin errores de consola, vista móvil 375px correcta
+- Pluralización arreglada: "1 día este mes" y etiqueta de racha "día/días" dinámica; fecha hardcodeada en index.html eliminada (la rellena JS)
+- Mapa de calor tipo GitHub añadido (spec 001): 5 niveles (0/1-15/16-45/46-90/>90 min), selector 8/12/26/52 semanas (persiste en localStorage, def. 12), tooltip, clic filtra sesiones, tema claro/oscuro con variables CSS. Lógica pura testeada con `node --test` (16 tests verdes)
 - Datos en localStorage (sesión, rachas, mejor racha, minutos semanales, días este mes)
 - **Añadida responsividad**: navbar colapsa en móvil, título y botones se reacomodan
 - **Añadido modo oscuro**: variables CSS, toggle con ícono ☀️/🌙, persiste en localStorage
@@ -30,3 +33,8 @@ Memoria del proyecto entre sessiones. Maximo ~50 líneas: resume o elimina lo qu
 
 ## Proximos pasos
 - Ninguno planeado por ahora. Si se añade modo "sistema", ya está soportado por `prefers-color-scheme`. Los cálculos semanal y mensual ya están integrados y persisten al recargar.
+
+
+## TAREAS:
+- Crea comando para los prompts de SSD
+- Implementa una nueva spec.
