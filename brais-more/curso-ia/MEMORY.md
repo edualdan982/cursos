@@ -3,26 +3,23 @@
 Memoria del proyecto entre sessiones. Maximo ~50 líneas: resume o elimina lo que ya no aporte.
 
 ## Estado Actual
+- v1.5 objetivo semanal (spec 002): fijar/editar/quitar objetivo en minutos, barra + porcentaje real, estado "cumplido". 30 tests verdes (16 heat-map + 14 weekly-goal)
+- Verificado con Chrome DevTools (07-10-2026): progreso parcial/cumplido/quitado, refresco al guardar sesión, móvil 375px y tema oscuro sin errores
 - v1.4 total días este mes en navbar
-- Verificado con Chrome DevTools (06-10-2026): 3 sesiones (hoy/ayer/anteayer) → racha 3, mejor racha 3, sin errores de consola, vista móvil 375px correcta
-- Pluralización arreglada: "1 día este mes" y etiqueta de racha "día/días" dinámica; fecha hardcodeada en index.html eliminada (la rellena JS)
-- Mapa de calor tipo GitHub añadido (spec 001): 5 niveles (0/1-15/16-45/46-90/>90 min), selector 8/12/26/52 semanas (persiste en localStorage, def. 12), tooltip, clic filtra sesiones, tema claro/oscuro con variables CSS. Lógica pura testeada con `node --test` (16 tests verdes)
-- Datos en localStorage (sesión, rachas, mejor racha, minutos semanales, días este mes)
-- **Añadida responsividad**: navbar colapsa en móvil, título y botones se reacomodan
-- **Añadido modo oscuro**: variables CSS, toggle con ícono ☀️/🌙, persiste en localStorage
-- **Fecha actual en navbar**: se muestra y actualiza cada minuto (yyyy-mm-dd)
-- **Total minutos esta semana**: suma de minutos de sesiones entre lunes y hoy, Mostrado en navbar
-- **Total días este mes**: cuenta de días únicos con sesión entre el 1 del mes y hoy
+- Mapa de calor tipo GitHub añadido (spec 001): 5 niveles, selector 8/12/26/52 semanas (persiste), tooltip, clic filtra, tema claro/oscuro
+- Datos en localStorage (sesiones, rachas, mejor racha, minutos semanales, días este mes, objetivo semanal)
+- Responsividad (móvil 375px), modo oscuro persistente, fecha actual en navbar cada minuto
 
 ## Decisiones (y por qué)
 - Sin backend ni dependencias: cualquiera debe poder abrirlo con doble clic
-- **Navbar con tema (izquierda), título (centro) y fecha (derecha)**: mejora accesibilidad y orientación
-- **Modo oscuro con persistencia en localStorage**: si el usuario lo cambia, se recuerda
-- **Fecha en navbar actualizada cada minuto**: captura el cambio de día sin necesidad de recargar
-- **Total minutos esta semana**: cálculo usando inicio de semana en lunes (es-ES); sesiones desde lunes 00:00 hasta hoy se suman. Se muestra en navbar junto a la fecha para visibilidad rápida
-- **Total días este mes**: cuenta de **días únicos** con sesión entre el 1 del mes y hoy (múltiples sesiones mismo día cuentan como 1). Se muestra en navbar tras el total semanal
-- **Racha = días consecutivos con sesión que terminan hoy**: regla mantenida tal cual
-- **Mejor racha = récord histórico sin regla "viva"**: sin cambios, se conserva
+- **Objetivo semanal en clave propia `study-diary-weekly-goal`** (número en texto): quitar = `removeItem`; sin la clave no hay objetivo (compatibilidad hacia atrás)
+- **`sumWeeklyMinutes(sessions, today)` como única fuente de verdad** de la semana lunes–hoy; `calculateWeeklyMinutes` delega en ella (evita divergencias)
+- **Barra topada al 100 % + porcentaje real en texto** (p. ej. 150 %): barra legible sin desbordar
+- **Formulario de edición oculto tras botón "Fijar/Editar objetivo"**: la vista normal queda limpia
+- **`parseGoalInput` valida en UI y al cargar** (entero > 0; decimal/vacío/0/negativo → null): una sola regla
+- **Navbar con tema (izquierda), título (centro) y fecha/derecha + totales**: orientación y visibilidad rápida
+- **Racha = días consecutivos con sesión que terminan hoy**; **mejor racha = récord histórico sin regla "viva"**
+- **Fecha en navbar actualizada cada minuto**: captura el cambio de día sin recargar
 
 ## Aprendizajes y errores a evitar
 - Los íconos de tema (☀️/🌙) funcionan mejor que texto para ahorrar espacio en móvil
@@ -32,7 +29,7 @@ Memoria del proyecto entre sessiones. Maximo ~50 líneas: resume o elimina lo qu
 - Para el cálculo mensual: solo contar días únicos (no sumar minutos); comparaciones de fecha `yyyy-mm-dd` funcionan por orden lexicográfico
 
 ## Proximos pasos
-- Ninguno planeado por ahora. Si se añade modo "sistema", ya está soportado por `prefers-color-scheme`. Los cálculos semanal y mensual ya están integrados y persisten al recargar.
+- Ninguno planeado. Próximas specs irían en `specs/003-*/`.
 
 
 ## TAREAS:

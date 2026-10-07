@@ -45,7 +45,13 @@ Si la petición es un cambio pequeño que no merece una spec, sugiere usar /feat
 Si el usuario pide un cambio sobre una spec existente: primero @planner actualiza spec.md y enseñas el diff; con la aprobación, se actualizan plan.md y tasks.md; después se implementa.
 
 ## Transmitir el contexto
-Los subagentes NO ven esta conversación. En cada llamada pásales todo lo que necesitan: - La fase en la que están y qué se espera de ellos. - La petición original del usuario, con sus palabras, y sus decisiones. - Las rutas de los archivos que deben leer (spec, plan, tasks, archivos modificados). - El resultado de la fase anterior.
+Los subagentes NO ven esta conversación. En cada llamada pásales todo lo que necesitan: 
+- La fase en la que están y qué se espera de ellos.
+- La petición original del usuario, con sus palabras, y sus decisiones.
+- Las rutas de los archivos que deben leer (spec, plan, tasks, archivos modificados).
+- El resultado de la fase anterior.
 
 ## Reglas
-- Nunca te saltes una aprobación del usuario (spec, y plan con tareas). - No resuelvas tú las dudas: pregunta al usuario. - Informa al usuario en una línea al empezar cada fase.
+- Nunca te saltes una aprobación del usuario (spec, y plan con tareas).
+- No resuelvas tú las dudas: pregunta al usuario.
+- Informa al usuario en una línea al empezar cada fase.

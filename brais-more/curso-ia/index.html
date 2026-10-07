@@ -36,6 +36,32 @@
             </div>
         </header>
 
+        <section class="weekly-goal" aria-label="Objetivo semanal">
+            <div class="weekly-goal-header">
+                <h2>Objetivo semanal</h2>
+                <button type="button" id="editGoalBtn" class="btn-link">Fijar objetivo</button>
+            </div>
+            <div id="goalProgressView" hidden>
+                <div id="goalProgressBar" class="goal-progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div id="goalProgressFill" class="goal-progress-fill"></div>
+                </div>
+                <p class="goal-progress-text" id="goalProgressText"></p>
+                <p class="goal-achieved" id="goalAchieved" hidden>¡Objetivo cumplido! 🎉</p>
+            </div>
+            <p id="goalEmptyView" class="goal-empty">Aún no has fijado un objetivo semanal.</p>
+            <form id="goalForm" class="goal-form" hidden>
+                <div class="form-group">
+                    <label for="goalMinutes">Minutos por semana</label>
+                    <input type="number" id="goalMinutes" name="goalMinutes" min="1" placeholder="Ej: 300">
+                </div>
+                <p id="goalError" class="goal-error" hidden>Introduce un número entero de minutos mayor que 0.</p>
+                <div class="goal-form-actions">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" id="clearGoalBtn" class="btn-link" hidden>Quitar objetivo</button>
+                </div>
+            </form>
+        </section>
+
         <section class="heat-map" aria-label="Mapa de calor de estudio">
             <div class="heat-map-header">
                 <h2>Actividad</h2>

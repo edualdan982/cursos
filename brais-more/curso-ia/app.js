@@ -1,5 +1,6 @@
 const STORAGE_KEY = "study-diary-sessions";
 const THEME_KEY = "study-diary-theme";
+const WEEKLY_GOAL_KEY = "study-diary-weekly-goal";
 
 function getToday() {
     const now = new Date();
@@ -137,29 +138,51 @@ function toggleTheme() {
 }
 
 // --- Total minutos esta semana ---
-function getWeekStartDate() {
-    const today = getToday();
-    const day = today.getDay(); // 0=dom, 1-lun, 2-mar, ...
-    const diff = day === 0 ? -6 : 1 - day; // si es dom (0), restar 6 para ir al lunes anterior; otherwise restar para ir al lunes
-    const weekStart = new Date(today);
-    weekStart.setDate(today.getDate() + diff);
-    weekStart.setHours(0, 0, 0, 0);
-    return weekStart;
+function calculateWeeklyMinutes(sessions) {
+    return sumWeeklyMinutes(sessions, getToday());
 }
 
-function calculateWeeklyMinutes(sessions) {
-    const weekStart = getWeekStartDate();
-    const today = getToday();
+// --- Objetivo semanal: lógica pura ---
+function sumWeeklyMinutes(sessions, today) {
+    const weekStart = weekStartMonday(today);
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     let total = 0;
 
     for (const session of sessions) {
         const sessionDate = parseDate(session.date);
-        if (sessionDate >= weekStart && sessionDate <= today) {
+        if (sessionDate >= weekStart && sessionDate <= todayMidnight) {
             total += session.minutes;
         }
     }
 
     return total;
+}
+
+function goalPercent(studied, goal) {
+    if (goal <= 0) return 0;
+    return Math.round((studied / goal) * 100);
+}
+
+function weeklyGoalProgress(sessions, today, goalMinutes) {
+    const studied = sumWeeklyMinutes(sessions, today);
+    const hasGoal = Number.isInteger(goalMinutes) && goalMinutes > 0;
+    if (!hasGoal) {
+        return { hasGoal: false, studied, goal: 0, percent: 0, achieved: false };
+    }
+    return {
+        hasGoal: true,
+        studied,
+        goal: goalMinutes,
+        percent: goalPercent(studied, goalMinutes),
+        achieved: studied >= goalMinutes,
+    };
+}
+
+function parseGoalInput(raw) {
+    if (raw === null || raw === undefined || raw === "") return null;
+    const n = Number(raw);
+    if (!Number.isInteger(n) || n <= 0) return null;
+    return n;
 }
 
 function renderWeeklyTotal(total) {
@@ -190,6 +213,104 @@ function calculateDaysThisMonth(sessions) {
     }
 
     return datesWithSessions.size;
+}
+
+// --- Objetivo semanal: persistencia ---
+function getWeeklyGoal() {
+    return parseGoalInput(localStorage.getItem(WEEKLY_GOAL_KEY));
+}
+
+function saveWeeklyGoal(minutes) {
+    localStorage.setItem(WEEKLY_GOAL_KEY, String(minutes));
+}
+
+function clearWeeklyGoal() {
+    localStorage.removeItem(WEEKLY_GOAL_KEY);
+}
+
+// --- Objetivo semanal: interfaz ---
+function renderWeeklyGoal() {
+    const progressView = document.getElementById("goalProgressView");
+    const emptyView = document.getElementById("goalEmptyView");
+    const section = document.querySelector(".weekly-goal");
+    const editBtn = document.getElementById("editGoalBtn");
+    if (!progressView || !emptyView) return;
+
+    const goal = getWeeklyGoal();
+    const progress = weeklyGoalProgress(loadSessions(), getToday(), goal);
+
+    if (!progress.hasGoal) {
+        progressView.hidden = true;
+        emptyView.hidden = false;
+        if (section) section.classList.remove("achieved");
+        if (editBtn) editBtn.textContent = "Fijar objetivo";
+        return;
+    }
+
+    progressView.hidden = false;
+    emptyView.hidden = true;
+    if (editBtn) editBtn.textContent = "Editar objetivo";
+
+    const fill = document.getElementById("goalProgressFill");
+    if (fill) fill.style.width = `${Math.min(progress.percent, 100)}%`;
+
+    const bar = document.getElementById("goalProgressBar");
+    if (bar) bar.setAttribute("aria-valuenow", String(Math.min(progress.percent, 100)));
+
+    const text = document.getElementById("goalProgressText");
+    if (text) {
+        text.textContent = `${progress.studied} / ${progress.goal} min · ${progress.percent} %`;
+    }
+
+    const achieved = document.getElementById("goalAchieved");
+    if (achieved) achieved.hidden = !progress.achieved;
+    if (section) section.classList.toggle("achieved", progress.achieved);
+}
+
+function initWeeklyGoal() {
+    const editBtn = document.getElementById("editGoalBtn");
+    const form = document.getElementById("goalForm");
+    const input = document.getElementById("goalMinutes");
+    const error = document.getElementById("goalError");
+    const clearBtn = document.getElementById("clearGoalBtn");
+
+    if (editBtn && form) {
+        editBtn.addEventListener("click", () => {
+            form.hidden = !form.hidden;
+            if (!form.hidden) {
+                const current = getWeeklyGoal();
+                input.value = current ? String(current) : "";
+                if (clearBtn) clearBtn.hidden = !current;
+                if (error) error.hidden = true;
+                input.focus();
+            }
+        });
+    }
+
+    if (form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const value = parseGoalInput(input.value);
+            if (value === null) {
+                if (error) error.hidden = false;
+                return;
+            }
+            if (error) error.hidden = true;
+            saveWeeklyGoal(value);
+            form.hidden = true;
+            renderWeeklyGoal();
+        });
+    }
+
+    if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+            clearWeeklyGoal();
+            if (form) form.hidden = true;
+            renderWeeklyGoal();
+        });
+    }
+
+    renderWeeklyGoal();
 }
 
 // --- Mapa de calor: lógica pura ---
@@ -394,6 +515,7 @@ function init() {
         renderSessions(sessions);
         renderWeeklyTotal(calculateWeeklyMinutes(sessions));
         renderDaysThisMonth(calculateDaysThisMonth(sessions));
+        renderWeeklyGoal();
         if (activeDateFilter) {
             applyDateFilter(activeDateFilter);
         }
@@ -408,6 +530,7 @@ function init() {
     renderSessions(sessions);
     renderWeeklyTotal(calculateWeeklyMinutes(sessions));
     renderDaysThisMonth(calculateDaysThisMonth(sessions));
+    initWeeklyGoal();
     initHeatMap();
 }
 
@@ -423,5 +546,9 @@ if (typeof module !== "undefined" && module.exports) {
         buildHeatMapData,
         filterSessionsByDate,
         formatTooltip,
+        sumWeeklyMinutes,
+        goalPercent,
+        weeklyGoalProgress,
+        parseGoalInput,
     };
 }

@@ -1,18 +1,15 @@
 ---
-description: Planifica la creación del constitution.md con respecto al AGENT.md y al MEMORY.md
+description: SDD · Propone la constitución del proyecto (principios innegociables)
 agent: plan
 ---
 
-Vamos a crear la constitución $ARGUMENTS.
-Es un proyecto que ya existe: lee @AGENTS.md, @MEMORY.md y el código antes de proponer nada.
+Vamos a crear (o revisar, si ya existe) docs/constitution.md. Usa la skill sdd. 
+Antes de proponer nada, lee AGENTS.md, MEMORY.md y el código del proyecto. 
+Contexto adicional: $ARGUMENTS 
 
-Es un proyecto educativo que debe poder mantener alguien que empieza a programar.
+Proponme 6 principios innegociables, cortos y verificables, que cubran: 
+simplicidad del stack, relación entre spec y código, separación entre lógica 
+e interfaz, política de tests, protección de los datos del usuario e idioma 
+del código y los textos. Máximo 15 líneas. 
 
-Proponme un docs/constitution.md con 6 principios innegociables, cortos y verificables, que cubran: 
-1. Simplicidad del stack
-2. Relación entre spec y código
-3. Separación entre lógica e interfaz
-4. Política de tests (sin instalar dependencias)
-5. Protección de los datos del usuario e idioma del código y los textos. Máximo 15 líneas.
-
-Espera mi aprobación.
+NO escribas el archivo todavía: espera mi aprobación. 

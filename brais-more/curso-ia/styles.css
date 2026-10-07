@@ -466,10 +466,92 @@ input:focus::placeholder {
     text-underline-offset: 4px;
 }
 
+/* Objetivo semanal */
+.weekly-goal {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: var(--spacing);
+    box-shadow: var(--shadow);
+    margin-bottom: calc(var(--spacing) * 2);
+}
+
+.weekly-goal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.weekly-goal-header h2 {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.goal-progress-bar {
+    width: 100%;
+    height: 12px;
+    background: var(--toggle-bg);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 12px;
+}
+
+.goal-progress-fill {
+    height: 100%;
+    width: 0;
+    background: var(--primary);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+.weekly-goal.achieved .goal-progress-fill {
+    background: var(--heat-3);
+}
+
+.goal-progress-text {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.goal-achieved {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--heat-3);
+    margin-top: 4px;
+}
+
+.goal-empty {
+    font-size: 0.9375rem;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.goal-form {
+    margin-top: 12px;
+}
+
+.goal-error {
+    font-size: 0.8125rem;
+    color: var(--accent);
+    margin-bottom: 4px;
+}
+
+.goal-form-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.goal-form-actions .btn {
+    margin-top: 0;
+}
+
 /* Heat map */
 .heat-map {
     background: var(--card);
-    border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: var(--spacing);
     box-shadow: var(--shadow);

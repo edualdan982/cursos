@@ -91,3 +91,18 @@ que cubran: simplicidad del stack, relación entre spec y código,separación en
 interfaz, política de tests (sin instalar dependencias), protección de los datos del 
 usuario e idioma del código y los textos. Máximo 15 líneas. Espera mi aprobación.
 ```
+
+## Prompt con el coordinator
+```text
+Quiero añadir un objetivo semanal de estudio: poder fijar cuántos minutos quiero estudiar cada semana y ver cuánto llevo, para motivarme a cumplirlo. Sigue el flujo SDD completo.
+```
+
+Lanzar diferentes tareas en paralelo:
+
+```text
+Lanza en paralelo tres @reviewer sobre la spec 002, cada uno con un foco distinto:
+1. Constitución y reglas de fechas (skill local-dates).
+2. Interfaz: accesibilidad y vista móvil con Chrome DevTools.
+3. Tests: qué RF están cubiertos por node --test y cuáles no.
+Cuando terminen los tres, junta sus resultados en un único informe, sin duplicados, con un veredicto final.
+```
